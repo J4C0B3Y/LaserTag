@@ -1,9 +1,10 @@
 "use client"
 
 import Container from "@/components/Container"
+import { cn } from "@/lib/utils"
 import { useRef } from "react"
 
-const FileInput = (props: { onFile: (file: File) => void }) => {
+const FileInput = (props: { onFile: (file: File) => void, className?: string }) => {
     const input = useRef<HTMLInputElement>(null)
 
     const handleFile = (files: FileList) => {
@@ -34,7 +35,7 @@ const FileInput = (props: { onFile: (file: File) => void }) => {
                 onDrop={event => handleDrop(event)}
                 onDragOver={event => {event.stopPropagation();event.preventDefault()}}
             >
-                <Container className="text-center px-16 flex flex-col" dashed>
+                <Container className={cn("items-center px-16 flex flex-col justify-center", props.className)} dashed>
                     <h1 className="text-3xl">Drag and Drop</h1>
                     <h2 className="text-lg text-stone-600">Click to Browse</h2>
                 </Container>

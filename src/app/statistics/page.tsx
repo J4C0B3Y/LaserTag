@@ -3,7 +3,6 @@
 import { useRouter } from "next-nprogress-bar"
 import { useEffect } from "react"
 
-
 const StatisticsPage = () => {
     const router = useRouter()
 
