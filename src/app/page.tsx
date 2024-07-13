@@ -2,6 +2,8 @@
 
 import Container from "@/components/Container"
 import FileInput from "@/components/input/FileInput"
+import SwitchInput from "@/components/match-settings/input/SwitchInput"
+import TeamSizeInput from "@/components/match-settings/input/TeamSizeInput"
 import MatchSetting from "@/components/match-settings/MatchSetting"
 import { useGameData } from "@/components/provider/impl/GameDataProvider"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
@@ -57,10 +59,16 @@ const HomePage = () => {
                     TODO: Packs Input
                 </MatchSetting>
                 <MatchSetting name="Team Size">
-                    TODO: Size Input
+                    <TeamSizeInput
+                        value={size}
+                        setValue={setSize}
+                    />
                 </MatchSetting>
                 <MatchSetting name="Bases Enabled">
-                    TODO: Bases Input
+                    <SwitchInput
+                        value={bases}
+                        setValue={setBases}
+                    />
                 </MatchSetting>
                 <button
                     className={cn(
