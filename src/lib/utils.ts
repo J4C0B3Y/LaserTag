@@ -1,5 +1,6 @@
 import type { ClassValue } from "clsx"
 import clsx from "clsx"
+import { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -14,4 +15,12 @@ export const safeParse = (input: string | null | undefined) => {
     } catch {
         return null
     }
+}
+
+export const autoupdate = (ms: number) => {
+    const [ticks, setTicks] = useState(0)
+
+    useEffect(() => {
+        setTimeout(() => setTicks(ticks + 1), ms)
+    }, [ticks])
 }

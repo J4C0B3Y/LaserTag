@@ -1,25 +1,42 @@
 import Pack from "@/lib/simulation/Pack"
+import type GameData from "@/lib/statistics/GameData"
+import Timer, { TimerEvent } from "@/lib/Timer"
 
 export default class Match {
-    public readonly size
+    public static readonly DURATION = 1000 * 60 * 15
+
+    public readonly teamSize
     public readonly bases
     public readonly packs = new Array<Pack>()
+    public readonly timer = new Timer(Match.DURATION, 10)
+    public finished = false
+    public data: GameData = {}
 
-    constructor(packs: number, size: TeamSize, bases: boolean) {
-        this.size = size
+    constructor(packs: number, teamSize: TeamSize, bases: boolean) {
+        this.teamSize = teamSize
         this.bases = bases
 
-        let teamIndex = 0
+        let team = 0, teamIndex = 0
 
         for (let i = 0; i < packs; i++) {
-            if (teamIndex >= size) {
-                teamIndex = 0
-            }
+            this.packs.push(new Pack(this.packs.length, team))
 
-            this.packs.push(new Pack(this.packs.length, teamIndex++))
+            if (++teamIndex >= teamSize) {
+                teamIndex = 0
+                team++
+            }
         }
+
+        this.timer.on(TimerEvent.FINISH, () => {
+            this.finished = true
+        })
+
+        this.timer.start()
     }
-    
+
+    public end() {
+        this.timer.finish()
+    }
 }
 
 export enum TeamSize {

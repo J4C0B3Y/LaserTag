@@ -35,7 +35,7 @@ const FileInput = (props: { onFile: (file: File) => void, className?: string }) 
                 onDrop={event => handleDrop(event)}
                 onDragOver={event => {event.stopPropagation();event.preventDefault()}}
             >
-                <Container className={cn("items-center px-16 flex flex-col justify-center", props.className)} dashed>
+                <Container inner={cn("items-center px-16 flex flex-col justify-center", props.className)} dashed>
                     <h1 className="text-3xl">Drag and Drop</h1>
                     <h2 className="text-lg text-stone-600">Click to Browse</h2>
                 </Container>

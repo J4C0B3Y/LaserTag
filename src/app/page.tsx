@@ -2,6 +2,7 @@
 
 import Container from "@/components/Container"
 import FileInput from "@/components/input/FileInput"
+import NumberInput from "@/components/match-settings/input/NumberInput"
 import SwitchInput from "@/components/match-settings/input/SwitchInput"
 import TeamSizeInput from "@/components/match-settings/input/TeamSizeInput"
 import MatchSetting from "@/components/match-settings/MatchSetting"
@@ -14,7 +15,7 @@ import { useEffect, useState } from "react"
 
 const HomePage = () => {
     const { data, setData } = useGameData()
-    const { match, setMatch } = useMatch()
+    const { setMatch } = useMatch()
 
     const [packs, setPacks] = useState(8)
     const [size, setSize] = useState(TeamSize.DUO)
@@ -54,9 +55,14 @@ const HomePage = () => {
         <div className="flex items-center justify-between h-full">
             <FileInput onFile={handleUpload} className="flex-1 h-64" />
             <h1 className="flex-1 text-3xl text-stone-600 text-center">OR</h1>
-            <Container className="flex-1 flex flex-col h-64">
+            <Container inner="flex flex-col h-64" outer="flex-1">
                 <MatchSetting name="Pack Count" className="mt-2">
-                    TODO: Packs Input
+                    <NumberInput
+                        value={packs}
+                        setValue={setPacks}
+                        min={1}
+                        max={32}
+                    />
                 </MatchSetting>
                 <MatchSetting name="Team Size">
                     <TeamSizeInput
