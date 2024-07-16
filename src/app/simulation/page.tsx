@@ -32,10 +32,25 @@ const SimulationPage = () => {
                 </Container>
             </div>
             {!match.finished ? <>
-                <Container header="PACKS">
-
+                <Container header="PACKS" inner="p-2">
+                    <div className="flex gap-2 overflow-scroll pb-4">
+                        {match.packs.map(pack => (
+                            <>
+                                <Container inner="py-2 bg-stone-200 w-48 h-56 flex flex-col">
+                                    <h1 className="text-center text-2xl text-stone-700">{pack.name}</h1>
+                                    <h1 className="text-center text-stone-500 mb-2">ID: {pack.id}</h1>
+                                    <h1 className="text-stone-600 text-lg">K/D: {pack.kills} - {pack.deaths}</h1>
+                                    <h1 className="text-stone-600 text-lg">KDR: {pack.kdr}</h1>
+                                    <h1 className="text-stone-600 text-lg">Score: {pack.score}</h1>
+                                </Container>
+                                {(pack.id + 1) % match.teamSize == 0 && pack.id != match.packs.length - 1 ? (
+                                    <div className="min-w-[1px] bg-stone-400" />
+                                ) : null}
+                            </>
+                        ))}
+                    </div>
                 </Container>
-                <Container header="BASES">
+                <Container header="BASES" inner="h-24">
 
                 </Container>
             </> : <div className="flex w-full [&>*]:flex-1 px-20 mt-32">

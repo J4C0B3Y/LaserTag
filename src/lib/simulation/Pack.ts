@@ -3,6 +3,8 @@ export default class Pack {
     public readonly id
     public readonly team
     private _name
+    public kills = 0
+    public deaths = 0
     
     constructor(id: number, team: number) {
         this.id = id
@@ -31,6 +33,14 @@ export default class Pack {
         }
 
         return `Pack #${this.id + 1}`
+    }
+    
+    public get kdr(){
+        return this.kills / this.deaths || 0
+    }
+
+    public get score() {
+        return 0
     }
 }
 

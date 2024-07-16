@@ -26,6 +26,7 @@ const Navigation = () => {
         <Container inner="flex justify-between p-2 items-center mb-4" dark>
             <div className="flex-1 flex gap-4">
                 <NavigationButton text={match.timer.running ? "PAUSE" : "PLAY"} onClick={() => {
+                    if (match.finished) return
                     match.timer[match.timer.running ? "stop" : "start"]()
                 }} />
 
