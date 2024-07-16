@@ -9,9 +9,8 @@ const InteractiveBase = (props: { base: Base }) => {
         <Container
             inner={cn("", BaseBackground[props.base.color])}
             outer="w-full" 
-            key={props.base.color}
-        >
-            {props.base.color}
+        >   
+            <h1>{props.base.color}</h1>
         </Container>
     )
 }

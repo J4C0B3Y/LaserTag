@@ -10,11 +10,12 @@ import { useRouter } from "next-nprogress-bar"
 import { usePathname } from "next/navigation"
 import { useEffect, useState, type ReactNode } from "react"
 import { DateTime } from "luxon"
+import { notify } from "@/components/provider/impl/NotificationProvider"
 
 const SimulationLayout = (props: { children: ReactNode }) => {
     const [quit, setQuit] = useState(true)
 
-    const { match } = useMatch()
+    const { match, setMatch } = useMatch()
     const router = useRouter()
     const pathname = usePathname()
     const update = useUpdate()
@@ -35,6 +36,20 @@ const SimulationLayout = (props: { children: ReactNode }) => {
     useEffect(() => {
         setQuit(pathname == "/simulation" || pathname == "/simulation/finished")
     }, [pathname])
+
+    const handleQuit = () => {
+        if (!quit) {
+            router.push("/simulation")
+            return
+        }
+
+        if (!confirm("Are you sure you would like to quit the match?\nThis action is irreversible!")) return
+
+        match.end()
+        setMatch(null as any)
+        notify.error("Ended Simulation!")
+        router.push("/")
+    }
     
     return match == null ? "" : (
         <>
@@ -75,7 +90,7 @@ const SimulationLayout = (props: { children: ReactNode }) => {
 
                     <NavigationButton
                         text={quit ? "QUIT" : "BACK"}
-                        onClick={() => router.push(quit ? "/" : "/simulation")}
+                        onClick={handleQuit}
                         className={cn({ "bg-quit": quit })}
                     />
                 </>}

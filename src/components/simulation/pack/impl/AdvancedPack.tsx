@@ -1,8 +1,11 @@
 import BasePack, { PackButton } from "@/components/simulation/pack/BasePack"
 import type Pack from "@/lib/simulation/Pack"
 import { cn } from "@/lib/utils/cn"
+import { useRouter } from "next-nprogress-bar"
 
 const AdvancedPack = (props: { pack: Pack, shooter: Pack | null, setShooter: (shooter: Pack | null) => void }) => {
+    const router = useRouter()
+
     const shooting = props.shooter != null
     const disabled = shooting && props.shooter!.team == props.pack.team
 
@@ -29,7 +32,10 @@ const AdvancedPack = (props: { pack: Pack, shooter: Pack | null, setShooter: (sh
                     onClick={handleShoot}
                     disabled={disabled}
                 />
-                <PackButton text="CONFIG" />
+                <PackButton 
+                    text="CONFIG"
+                    onClick={() => router.push(`/simulation/pack/${props.pack.id}`)}
+                />
             </>}
         >
             <Statistic text="K/D" value={`${props.pack.kills} - ${props.pack.deaths}`} />
