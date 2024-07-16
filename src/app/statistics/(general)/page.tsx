@@ -2,10 +2,10 @@
 
 import { useGameData } from "@/components/provider/impl/GameDataProvider"
 
-const GeneralStatisticsPage = () => {
+const GeneralStatistics = () => {
     const { data } = useGameData()
 
     return <>{JSON.stringify(data)}</>
 }
 
-export default GeneralStatisticsPage
+export default GeneralStatistics

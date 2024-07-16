@@ -1,3 +1,5 @@
+import type Base from "@/lib/simulation/Base"
+import Match from "@/lib/simulation/Match"
 
 export default class Pack {
     public readonly id
@@ -5,6 +7,10 @@ export default class Pack {
     private _name
     public kills = 0
     public deaths = 0
+    public bases = 0
+    public multiplier = 1
+    public adjust = 0
+    private _score = 0
     
     constructor(id: number, team: number) {
         this.id = id
@@ -36,11 +42,90 @@ export default class Pack {
     }
     
     public get kdr(){
-        return this.kills / this.deaths || 0
+        if (this.kills == 0) return 0
+        if (this.deaths == 0) return this.kills
+
+        const ratio = this.kills / this.deaths
+
+        return Math.round((ratio + Number.EPSILON) * 100) / 100
     }
 
     public get score() {
-        return 0
+        const score = 
+            (this.kills * 1000) +
+            (this.bases * 10000) -
+            (this.deaths * 500) *
+            (this.multiplier) +
+            (this.adjust)
+
+        return Math.max(score, 0)
+    }
+
+    public shoot(target: Pack) {
+        this.kills++
+        target.deaths++
+    }
+}
+
+class Pack2 {
+    public readonly id
+    public readonly team
+
+    private _kills = 0
+    private _deaths = 0
+    private _bases = 0
+
+    private _rawScore = 0
+    public scoreMultiplier = 1
+    public scoreAdjustment = 0
+
+    constructor(id: number, team: number) {
+        this.id = id
+        this.team = team
+    }
+
+    public shoot(target: Pack) {
+
+    }
+
+    private modify(score: number) {
+        this._rawScore = Math.max(this._rawScore + score, 0)
+    }
+
+    public get score() {
+        return Math.max(this._rawScore * this.scoreMultiplier + this.scoreAdjustment, 0)
+    }
+
+    public get kills() {
+        return this._kills
+    }
+
+    public addKill() {
+        this._kills += 1
+        this.modify(Match.KILL_REWARD)
+    }
+
+    public addDeath() {
+        this._deaths += 1
+        this.modify(-Match.DEATH_PENALTY)
+    }
+
+    public shootBase(base: Base) {
+        if (base.disabled) {
+            throw new Error(`Base (${base.color}) was shot by pack #${this.id} whilst on cooldown for ${base.cooldown}ms.`)
+        }
+
+        base.shoot()
+        this._bases += 1
+        this.modify(Match.BASE_REWARD)
+    }
+
+    public get deaths() {
+        return this._deaths
+    }
+
+    public get bases() {
+        return this._bases
     }
 }
 

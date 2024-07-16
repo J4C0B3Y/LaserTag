@@ -1,58 +1,22 @@
-"use client"
-
 import Container from "@/components/Container"
-import { useMatch } from "@/components/provider/impl/MatchProvider"
-import NavigationButton from "@/components/simulation/navigation/NavigationButton"
-import { autoupdate } from "@/lib/utils"
-import { DateTime } from "luxon"
-import { useRouter } from "next-nprogress-bar"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils/cn"
+import type { ReactNode } from "react"
 
-const Navigation = () => {
-    const { match, setMatch } = useMatch()
-    const pathname = usePathname()
-    const router = useRouter()
-
-    const [quit, setQuit] = useState(false)
-
-    autoupdate(10)
-
-    useEffect(() => {
-        setQuit(pathname == "/simulation")
-    }, [pathname])
-
+const Navigation = (props: { left?: ReactNode, center?: ReactNode, right?: ReactNode }) => {
     return (
-        <Container inner="flex justify-between p-2 items-center mb-4" dark>
-            <div className="flex-1 flex gap-4">
-                <NavigationButton text={match.timer.running ? "PAUSE" : "PLAY"} onClick={() => {
-                    if (match.finished) return
-                    match.timer[match.timer.running ? "stop" : "start"]()
-                }} />
-
-                <NavigationButton text="STATS" onClick={() => {
-                    router.push("/simulation/statistics")
-                }} />
-            </div>
-            <div className="text-xl text-stone-800">
-                {DateTime.fromMillis(match.timer.elapsed).toFormat("mm.ss.u")}
-            </div>
-            <div className="flex-1 flex justify-end gap-4">
-                <NavigationButton text="HELP" onClick={() => {
-                    router.push("/simulation/help")
-                }} />
-
-                <NavigationButton text={quit ? "QUIT" : "BACK"} red={quit} onClick={() => {
-                    if (quit) {
-                        match.end()
-                        setMatch(null as any)
-                        router.push("/")
-                    } else {
-                        router.push("/simulation")
-                    }
-                }} />
-            </div>
+        <Container inner="flex items-center">
+            <ButtonContainer children={props.left} />
+            {props.center}
+            <ButtonContainer children={props.right} className="justify-end" />
         </Container>
+    )
+}
+
+const ButtonContainer = (props: { children?: ReactNode, className?: string }) => {
+    return (
+        <div className={cn("flex flex-1 gap-2", props.className)}>
+            {props.children}
+        </div>
     )
 }
 

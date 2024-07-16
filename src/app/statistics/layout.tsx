@@ -2,7 +2,7 @@
 
 import { useGameData } from "@/components/provider/impl/GameDataProvider"
 import { useRouter } from "next-nprogress-bar"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 
 const StatisticsLayout = (props: { children: React.ReactNode }) => {
     const { data } = useGameData()
@@ -11,6 +11,7 @@ const StatisticsLayout = (props: { children: React.ReactNode }) => {
     useEffect(() => {
         if (data == null) {
             router.push("/")
+            return
         }
     }, [])
 

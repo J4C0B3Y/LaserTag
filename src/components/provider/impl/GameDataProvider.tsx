@@ -8,7 +8,7 @@ export const GameDataContext = React.createContext({
     setData: (data: GameData) => {}
 })
 
-export const GameDataProvider = (props: { children: React.ReactNode }) => {
+const GameDataProvider = (props: { children: React.ReactNode }) => {
     const [data, setData] = useState<GameData>(null as any)
 
     return (
@@ -21,3 +21,5 @@ export const GameDataProvider = (props: { children: React.ReactNode }) => {
 export const useGameData = () => {
     return useContext(GameDataContext)
 }
+
+export default GameDataProvider

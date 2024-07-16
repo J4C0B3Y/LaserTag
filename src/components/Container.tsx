@@ -1,21 +1,19 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/cn"
+import type { ReactNode } from "react"
 
-const Container = (props: { children?: React.ReactNode, inner?: string, outer?: string, dashed?: boolean, dark?: boolean, header?: string }) => {
+const Header = (props: { text: string }) => {
+    return <h1 className="text-sm font-bold text-secondary pl-4">{props.text}</h1>
+}
+
+const Container = (props: { children?: ReactNode, header?: string, inner?: string, outer?: string, }) => {
     return (
-        <span className={props.outer}>
-            {props.header ? (
-                <span className="font-bold uppercase text-sm pl-4 text-stone-500">{props.header}</span>
-            ) : null}
-            <div className={cn(
-                "rounded-xl bg-stone-300 border-2 border-stone-500 p-4", 
-                { "border-dashed": props.dashed },
-                { "bg-stone-400": props.dark },
-                props.inner
-            )}>
+        <div className={cn("flex flex-col", props.outer)}>
+            { props.header ? <Header text={props.header!} /> : null }
+
+            <div className={cn("bg-container border rounded-lg p-2 h-full", props.inner)}>
                 {props.children}
             </div>
-        </span>
-
+        </div>
     )
 }
 

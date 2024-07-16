@@ -8,7 +8,7 @@ export const MatchContext = React.createContext({
     setMatch: (match: Match) => {}
 })
 
-export const MatchProvider = (props: { children: React.ReactNode }) => {
+const MatchProvider = (props: { children: React.ReactNode }) => {
     const [match, setMatch] = useState<Match>(null as any)
 
     return (
@@ -21,3 +21,5 @@ export const MatchProvider = (props: { children: React.ReactNode }) => {
 export const useMatch = () => {
     return useContext(MatchContext)
 }
+
+export default MatchProvider

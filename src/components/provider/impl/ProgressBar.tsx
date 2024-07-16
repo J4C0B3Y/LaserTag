@@ -16,7 +16,7 @@ const progressOptions: ProgressOptions = {
 const ProgressBar = () => {
     return (
         <AppProgressBar
-            color="#78716c" // Stone 500
+            color="var(--progress-color)"
             height="4px"
             options={progressOptions}
         />
