@@ -8,7 +8,7 @@ const SimulationInfo = (props: { match: Match }) => {
         <div className="flex px-8 items-center">
             <Container header="TIME LEFT" inner="rounded-r-none w-[493px]" outer="w-[1250px] overflow-hidden">
                 <h1 className="text-center text-primary font-bold text-9xl mb-4">
-                    {DateTime.fromMillis(props.match.timer.remaining).toFormat("mm:ss")}
+                    {DateTime.fromMillis(props.match.timer.remaining + (props.match.finished ? 0 : 1000)).toFormat("mm:ss")}
                 </h1>
             </Container>
             <Container header="MATCH INFO" inner="py-4 px-6" outer="w-full">

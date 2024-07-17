@@ -1,16 +1,20 @@
+import type Match from "@/lib/simulation/Match"
 
 export default class Base {
     public static readonly COOLDOWN = 1000 * 10
 
     public readonly color
-    private _lastShot = 0
+    public readonly match
 
-    constructor (color: BaseColor) {
+    private _lastShot = -Base.COOLDOWN
+
+    constructor (color: BaseColor, match: Match) {
         this.color = color
+        this.match = match
     }
 
     public shoot() {
-        this._lastShot = Date.now()
+        this._lastShot = this.match.timer.elapsed
     }
 
     public get lastShot() {
@@ -18,7 +22,7 @@ export default class Base {
     }
 
     public get cooldown() {
-        return Math.max(this.lastShot + Base.COOLDOWN - Date.now(), 0)
+        return Math.max(this._lastShot + Base.COOLDOWN - this.match.timer.elapsed, 0)
     }
 
     public get disabled() {

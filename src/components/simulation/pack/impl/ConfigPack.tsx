@@ -2,7 +2,7 @@ import BasePack, { PackButton } from "@/components/simulation/pack/BasePack"
 import type Pack from "@/lib/simulation/Pack"
 import { useRouter } from "next-nprogress-bar"
 
-const MinimalPack = (props: { pack: Pack }) => {
+const ConfigPack = (props: { pack: Pack }) => {
     const router = useRouter()
 
     return (
@@ -18,4 +18,4 @@ const MinimalPack = (props: { pack: Pack }) => {
     )
 }
 
-export default MinimalPack
+export default ConfigPack

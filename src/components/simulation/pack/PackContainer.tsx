@@ -1,34 +1,37 @@
 "use client"
 
 import Container from "@/components/Container"
-import AdvancedPack from "@/components/simulation/pack/impl/AdvancedPack"
-import MinimalPack from "@/components/simulation/pack/impl/MinimalPack"
+import InteractivePack from "@/components/simulation/pack/impl/InteractivePack"
+import ConfigPack from "@/components/simulation/pack/impl/ConfigPack"
 import type Match from "@/lib/simulation/Match"
 import type Pack from "@/lib/simulation/Pack"
-import { useState } from "react"
+import { Fragment } from "react"
 
-const PackContainer = (props: { match: Match, minimal?: boolean }) => {
-    const [shooter, setShooter] = useState<Pack | null>(null)
-
-    const packs = props.match.packs
-
+const PackContainer = (props: { 
+    match: Match, 
+    config?: boolean, 
+    shooter?: Pack | null, 
+    setShooter?: (shooter: Pack | null) => void 
+}) => {
     return (
         <Container header="PACKS" inner="flex gap-2 overflow-scroll">
-            {packs.map(pack =><>
-                {props.minimal ? 
-                    <MinimalPack pack={pack} key={pack.id} /> :
-                    
-                    <AdvancedPack 
-                        pack={pack}
-                        shooter={shooter}
-                        setShooter={setShooter}
-                        key={pack.id}
-                    />
-                }
-                {(pack.id + 1) % props.match.teamSize == 0 && pack.id != packs.length - 1 ? (
-                    <span className="border-[1px] border-seperator rounded-md" key={`seperator-${pack.team}`} />
-                ) : null}
-            </>)}
+            {props.match.packs.map(pack =>
+                <Fragment key={pack.id}>
+                    {props.config ? 
+                        <ConfigPack pack={pack} /> :
+
+                        <InteractivePack 
+                            pack={pack}
+                            shooter={props.shooter!}
+                            setShooter={props.setShooter!}
+                        />
+                    }
+
+                    {(pack.id + 1) % props.match.teamSize == 0 && pack.id != props.match.packs.length - 1 ?
+                        <span className="border-[1px] border-seperator rounded-md" />
+                    : null}
+                </Fragment>
+            )}
         </Container>
     )
 }

@@ -51,7 +51,7 @@ export default class Timer {
         this.remaining = Math.max(0, this._remaining - (Date.now() - this.started))
         this.listeners.TICK.forEach(_ => _())
 
-        if (this._remaining == 0) {
+        if (this.remaining == 0) {
             this.finish()
         }
 

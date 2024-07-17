@@ -1,17 +1,25 @@
 import BasePack, { PackButton } from "@/components/simulation/pack/BasePack"
 import type Pack from "@/lib/simulation/Pack"
 import { cn } from "@/lib/utils/cn"
+import { DateTime } from "luxon"
 import { useRouter } from "next-nprogress-bar"
 
-const AdvancedPack = (props: { pack: Pack, shooter: Pack | null, setShooter: (shooter: Pack | null) => void }) => {
+const InteractivePack = (props: { pack: Pack, shooter: Pack | null, setShooter: (shooter: Pack | null) => void }) => {
     const router = useRouter()
 
-    const shooting = props.shooter != null
-    const disabled = shooting && props.shooter!.team == props.pack.team
+    const shooter = props.shooter != null
+    const shooting = shooter && props.shooter == props.pack
+    const team = shooter && props.shooter!.team == props.pack.team
+    const disabled = !shooting && team || props.pack.disabled
 
     const handleShoot = () => {
-        if (!shooting) {
+        if (!shooter) {
             props.setShooter(props.pack)
+            return
+        }
+
+        if (props.shooter == props.pack) {
+            props.setShooter(null)
             return
         }
 
@@ -24,9 +32,12 @@ const AdvancedPack = (props: { pack: Pack, shooter: Pack | null, setShooter: (sh
             pack={props.pack}
             buttons={<>
                 <PackButton 
-                    text={props.shooter ? "SHOOT" : "SELECT"} 
+                    text={props.pack.disabled ? 
+                        DateTime.fromMillis(props.pack.cooldown + 999).toFormat("s") + "s" : 
+                        props.shooter ? shooting ? "CANCEL" : "SHOOT" : "SELECT"
+                    } 
                     className={cn({
-                        "bg-shoot": shooting && !disabled,
+                        "bg-shoot": shooter && !disabled && !shooting,
                         "opacity-50 bg-element text-secondary": disabled
                     })}
                     onClick={handleShoot}
@@ -54,4 +65,4 @@ const Statistic = (props: { text: string, value: string }) => {
     )
 }
 
-export default AdvancedPack
+export default InteractivePack

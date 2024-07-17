@@ -8,7 +8,7 @@ const PackConfiguration = (props: { params: { id: number } }) => {
     const pack = match.packs[props.params.id]
 
     return <>
-        <PackContainer match={match} minimal />
+        <PackContainer match={match} config />
     </>
 }
 

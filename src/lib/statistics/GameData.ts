@@ -1,6 +1,9 @@
+import type Match from "@/lib/simulation/Match"
 
 export default class GameData {
-    
+    public match = new MatchData()
+    public packs = new PackData()
+
     public toJson() {
         return {
 
@@ -9,7 +12,9 @@ export default class GameData {
 
     public static fromJson() {
         const data = new GameData()
+        const match = new MatchData()
 
+        data.match = match
         return data
     }
 
@@ -21,4 +26,25 @@ export default class GameData {
         element.click()
         element.remove()
     }
+}
+
+export class MatchData {
+    public basesEnabled: boolean = true
+    public events = new Array<MatchEvent>
+}
+
+export class PackData {
+
+}
+
+export enum EventType {
+    KILL="kill",
+    DEATH="death",
+    BASE="base"
+}
+
+export type MatchEvent = {
+    type: EventType,
+    time: number,
+    score: number
 }

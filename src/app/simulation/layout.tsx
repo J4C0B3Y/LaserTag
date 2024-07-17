@@ -47,7 +47,7 @@ const SimulationLayout = (props: { children: ReactNode }) => {
 
         match.end()
         setMatch(null as any)
-        notify.error("Ended Simulation!")
+        notify.success("Ended Simulation!")
         router.push("/")
     }
     

@@ -6,9 +6,9 @@ import Timer, { TimerEvent } from "@/lib/Timer"
 export default class Match {
     public static readonly DURATION = 1000 * 60 * 15
 
-    public static readonly KILL_REWARD = 1000
-    public static readonly DEATH_PENALTY = 500
-    public static readonly BASE_REWARD = 10000 
+    public static readonly KILL_REWARD = 100
+    public static readonly DEATH_PENALTY = 50
+    public static readonly BASE_REWARD = 1000 
 
     public readonly teamSize
     public readonly basesEnabled
@@ -25,7 +25,7 @@ export default class Match {
         let team = 0, teamIndex = 0
 
         for (let i = 0; i < packs; i++) {
-            this.packs.push(new Pack(this.packs.length, team))
+            this.packs.push(new Pack(this.packs.length, team, this))
 
             if (++teamIndex >= teamSize) {
                 teamIndex = 0
@@ -35,7 +35,7 @@ export default class Match {
 
         if (basesEnabled) {
             for (const key of Object.keys(BaseColor)) {
-                this.bases.push(new Base(BaseColor[key as keyof typeof BaseColor]))
+                this.bases.push(new Base(BaseColor[key as keyof typeof BaseColor], this))
             }
         }
 
