@@ -3,6 +3,7 @@ import Pack from "@/lib/simulation/Pack"
 import MatchData from "@/lib/statistics/data/MatchData"
 import Timer, { TimerEvent } from "@/lib/Timer"
 
+// TODO: Look
 export default class Match {
     public static readonly DURATION = 1000 * 60 * 15
 

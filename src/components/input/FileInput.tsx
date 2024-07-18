@@ -1,9 +1,9 @@
 import Container from "@/components/Container"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import { cn } from "@/lib/utils/cn"
-import { useRef } from "react"
+import { useRef, type Ref } from "react"
 
-const FileInput = (props: { onFile: (files: File) => void, className?: string, accept?: string }) => {
+const FileInput = (props: { onFile: (files: File) => void, outer?: string, inner?: string, accept: string, }) => {
     const ref = useRef<HTMLInputElement>(null)
 
     const handleFile = (files: FileList) => {
@@ -24,7 +24,7 @@ const FileInput = (props: { onFile: (files: File) => void, className?: string, a
 
     return <>
         <button 
-            className={cn("rounded-lg", props.className)}
+            className={cn("rounded-lg", props.outer)}
             onClick={() => ref.current!.click()} 
 
             onDragOver={event => {
@@ -37,7 +37,7 @@ const FileInput = (props: { onFile: (files: File) => void, className?: string, a
                 handleFile(event.dataTransfer.files)
             }}
         >
-            <Container inner="flex items-center justify-center flex-col border-dashed h-full" outer="h-full">
+            <Container inner={cn("flex items-center justify-center flex-col border-dashed h-full", props.inner)} outer="h-full">
                 <h1 className="text-3xl text-primary">Drag and Drop</h1>
                 <h1 className="text-lg text-secondary">Click to Browse</h1>
             </Container>

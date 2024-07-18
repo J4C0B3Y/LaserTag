@@ -1,4 +1,5 @@
 
+// TODO: Look
 export default class Timer {
     public running = false
 

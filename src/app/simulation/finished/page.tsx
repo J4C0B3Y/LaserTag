@@ -6,6 +6,7 @@ import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
 import NavigationButton from "@/components/simulation/navigation/NavigationButton"
+import Json from "@/lib/utils/Json"
 import { useRouter } from "next-nprogress-bar"
 import { useState } from "react"
 
@@ -25,7 +26,7 @@ const Finished = () => {
             notify.error(`Please wait ${Math.ceil(cooldown / 1000)}s before downloading again!`)
             return
         }
-
+        
         match.data.download()
         notify.success("Downloaded Game File!")
         setLastDownload(Date.now())

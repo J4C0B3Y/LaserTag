@@ -1,13 +1,12 @@
 import type Pack from "@/lib/simulation/Pack"
 import type { MatchEvent } from "@/lib/statistics/data/MatchData"
 
+// TODO: Look
 export default class PackData {
-    public readonly id
-    public readonly events
     public name
+    public readonly events
 
     constructor(pack: Pack) {
-        this.id = pack.id
         this.name = pack.name
         this.events = new Array<MatchEvent>()
     }

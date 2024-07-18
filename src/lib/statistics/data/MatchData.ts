@@ -1,6 +1,8 @@
 import Match from "@/lib/simulation/Match"
 import PackData from "@/lib/statistics/data/PackData"
+import Json from "@/lib/utils/Json"
 
+// TODO: Look
 export default class MatchData {
     public readonly basesEnabled
     public readonly teamSize
@@ -17,19 +19,14 @@ export default class MatchData {
     }
 
     public download() {
-        const data = encodeURIComponent(JSON.stringify(this))
-        const element = document.createElement("a")
-        element.setAttribute("href", `data:text/json;charset=utf-8,${data}`)
-        element.setAttribute("download", `lasertag-${Date.now()}.json`)
-        element.click()
-        element.remove()
+        Json.download(this, "lasertag")
     }
 }
 
 export enum EventType {
-    KILL="kill",
-    DEATH="death",
-    BASE="base"
+    KILL="KILL",
+    DEATH="DEATH",
+    BASE="BASE"
 }
 
 export type MatchEvent = {
