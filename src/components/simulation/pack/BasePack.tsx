@@ -3,9 +3,9 @@ import type Pack from "@/lib/simulation/Pack"
 import { cn } from "@/lib/utils/cn"
 import type { ReactNode } from "react"
 
-const BasePack = (props: { pack: Pack, children?: ReactNode, buttons?: ReactNode }) => {
+const BasePack = (props: { pack: Pack, children?: ReactNode, buttons?: ReactNode, className?: string }) => {
     return (
-        <Container key={props.pack.id} inner="bg-element w-44 overflow-hidden text-center">
+        <Container key={props.pack.id} inner={cn("bg-element w-44 overflow-hidden text-center", props.className)}>
             <h1 className="text-primary text-xl font-semibold">{props.pack.name}</h1>
             <h1 className="text-secondary text-md">ID: {props.pack.id}</h1>
             {props.children}

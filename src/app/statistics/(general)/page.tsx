@@ -1,9 +1,9 @@
 "use client"
 
-import { useGameData } from "@/components/provider/impl/GameDataProvider"
+import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 
 const GeneralStatistics = () => {
-    const { data } = useGameData()
+    const { data } = useMatchData()
 
     return <>{JSON.stringify(data)}</>
 }

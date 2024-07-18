@@ -1,6 +1,9 @@
 import type Base from "@/lib/simulation/Base"
 import Match from "@/lib/simulation/Match"
+import { EventType } from "@/lib/statistics/data/MatchData"
+import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"
+import { time } from "console"
 
 export default class Pack {
     public static readonly COOLDOWN = 1000 * 3
@@ -8,8 +11,9 @@ export default class Pack {
     public readonly id
     public readonly team
     public readonly match
+    public readonly data
 
-    private _name: string | null = null
+    private _name: string = null as any
 
     private _kills = 0
     private _deaths = 0
@@ -26,6 +30,9 @@ export default class Pack {
         this.team = team
         this.match = match
         this.load()
+
+        this.data = new PackData(this)
+        this.match.data.packs.push(this.data)
     }
 
     private load() {
@@ -75,11 +82,13 @@ export default class Pack {
     public addKill() {
         this._kills += 1
         this.modify(Match.KILL_REWARD)
+        this.saveEvent(EventType.KILL)
     }
 
     public addDeath() {
         this._deaths += 1
         this.modify(-Match.DEATH_PENALTY)
+        this.saveEvent(EventType.DEATH)
     }
 
     public shootBase(base: Base) {
@@ -90,6 +99,17 @@ export default class Pack {
         base.shoot()
         this._bases += 1
         this.modify(Match.BASE_REWARD)
+        this.saveEvent(EventType.BASE)
+    }
+
+    private saveEvent(type: EventType) {
+        const event = {
+            type: type,
+            time: this.match.timer.elapsed,
+            score: this.score
+        }
+
+        this.data.events.push(event)
     }
 
     public get deaths() {

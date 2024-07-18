@@ -8,6 +8,7 @@ const PackConfiguration = (props: { params: { id: number } }) => {
     const pack = match.packs[props.params.id]
 
     return <>
+        {pack.name}
         <PackContainer match={match} config />
     </>
 }

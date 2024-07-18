@@ -1,6 +1,6 @@
 import Base, { BaseColor } from "@/lib/simulation/Base"
 import Pack from "@/lib/simulation/Pack"
-import GameData from "@/lib/statistics/GameData"
+import MatchData from "@/lib/statistics/data/MatchData"
 import Timer, { TimerEvent } from "@/lib/Timer"
 
 export default class Match {
@@ -15,39 +15,53 @@ export default class Match {
     public readonly packs = new Array<Pack>()
     public readonly bases = new Array<Base>()
     public readonly timer = new Timer(Match.DURATION, 10)
-    public finished = false
-    public data = new GameData()
+    public readonly data
 
-    constructor(packs: number, teamSize: TeamSize, basesEnabled: boolean) {
+    private _finished = false
+
+    constructor(packCount: number, teamSize: TeamSize, basesEnabled: boolean) {
         this.teamSize = teamSize
         this.basesEnabled = basesEnabled
+        this.data = new MatchData(this)
 
-        let team = 0, teamIndex = 0
-
-        for (let i = 0; i < packs; i++) {
-            this.packs.push(new Pack(this.packs.length, team, this))
-
-            if (++teamIndex >= teamSize) {
-                teamIndex = 0
-                team++
-            }
-        }
+        this.initializePacks(packCount)
 
         if (basesEnabled) {
-            for (const key of Object.keys(BaseColor)) {
-                this.bases.push(new Base(BaseColor[key as keyof typeof BaseColor], this))
-            }
+            this.initializeBases()
         }
 
         this.timer.on(TimerEvent.FINISH, () => {
-            this.finished = true
+            this._finished = true
         })
 
         this.timer.start()
     }
 
+    public initializePacks(packCount: number) {
+        let team = 0, teamIndex = 0
+
+        for (let i = 0; i < packCount; i++) {
+            this.packs.push(new Pack(this.packs.length, team, this))
+
+            if (++teamIndex >= this.teamSize) {
+                teamIndex = 0
+                team++
+            }
+        }
+    }
+
+    public initializeBases() {
+        for (const key of Object.keys(BaseColor)) {
+            this.bases.push(new Base(BaseColor[key as keyof typeof BaseColor], this))
+        }
+    }
+
     public end() {
         this.timer.finish()
+    }
+
+    public get finished() {
+        return this._finished
     }
 }
 

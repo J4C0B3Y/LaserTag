@@ -30,6 +30,7 @@ const InteractivePack = (props: { pack: Pack, shooter: Pack | null, setShooter: 
     return (
         <BasePack
             pack={props.pack}
+           // className={shooting ? "-scale-x-100 invert" : ""}
             buttons={<>
                 <PackButton 
                     text={props.pack.disabled ? 

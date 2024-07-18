@@ -1,11 +1,11 @@
 "use client"
 
-import { useGameData } from "@/components/provider/impl/GameDataProvider"
+import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { useRouter } from "next-nprogress-bar"
 import { useEffect } from "react"
 
 const StatisticsLayout = (props: { children: React.ReactNode }) => {
-    const { data } = useGameData()
+    const { data } = useMatchData()
     const router = useRouter()
 
     useEffect(() => {

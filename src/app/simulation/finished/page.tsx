@@ -1,7 +1,7 @@
 "use client"
 
 import Container from "@/components/Container"
-import { useGameData } from "@/components/provider/impl/GameDataProvider"
+import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
@@ -13,7 +13,7 @@ const Finished = () => {
     const DOWNLOAD_COOLDOWN = 1000 * 3
 
     const { match } = useMatch()
-    const { setData } = useGameData()
+    const { setData } = useMatchData()
     const router = useRouter()
 
     const [lastDownload, setLastDownload] = useState(0)
