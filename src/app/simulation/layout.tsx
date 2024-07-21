@@ -3,7 +3,6 @@
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import NavigationButton from "@/components/simulation/navigation/NavigationButton"
 import Navigation from "@/components/simulation/navigation/Navigation"
-import { TimerEvent } from "@/lib/Timer"
 import { autoupdate, useUpdate } from "@/lib/utils/update"
 import { cn } from "@/lib/utils/cn"
 import { useRouter } from "next-nprogress-bar"
@@ -28,7 +27,7 @@ const SimulationLayout = (props: { children: ReactNode }) => {
             return
         }
 
-        match.timer.on(TimerEvent.FINISH, () => {
+        match.timer.onFinish(() => {
             router.push("/simulation/finished")
         })
     }, [])

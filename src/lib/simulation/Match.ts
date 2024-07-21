@@ -1,9 +1,8 @@
 import Base, { BaseColor } from "@/lib/simulation/Base"
 import Pack from "@/lib/simulation/Pack"
 import MatchData from "@/lib/statistics/data/MatchData"
-import Timer, { TimerEvent } from "@/lib/Timer"
+import Timer from "@/lib/Timer"
 
-// TODO: Look
 export default class Match {
     public static readonly DURATION = 1000 * 60 * 15
 
@@ -13,11 +12,12 @@ export default class Match {
 
     public readonly teamSize
     public readonly basesEnabled
+    public readonly data
+    
     public readonly packs = new Array<Pack>()
     public readonly bases = new Array<Base>()
+    
     public readonly timer = new Timer(Match.DURATION, 10)
-    public readonly data
-
     private _finished = false
 
     constructor(packCount: number, teamSize: TeamSize, basesEnabled: boolean) {
@@ -31,7 +31,7 @@ export default class Match {
             this.initializeBases()
         }
 
-        this.timer.on(TimerEvent.FINISH, () => {
+        this.timer.onFinish(() => {
             this._finished = true
         })
 

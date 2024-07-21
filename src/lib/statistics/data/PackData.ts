@@ -1,7 +1,6 @@
 import type Pack from "@/lib/simulation/Pack"
 import type { MatchEvent } from "@/lib/statistics/data/MatchData"
 
-// TODO: Look
 export default class PackData {
     public name
     public readonly events

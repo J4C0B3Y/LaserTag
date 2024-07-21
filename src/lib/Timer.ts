@@ -1,23 +1,20 @@
 
-// TODO: Look
 export default class Timer {
-    public running = false
+    private readonly listeners = new Array<() => void>()
+    private timer!: NodeJS.Timeout
 
     public readonly duration: number
     public readonly interval: number
-    public remaining!: number
-    private _remaining: number
-    public started!: number
-    
-    private timer!: NodeJS.Timeout
 
-    private readonly listeners: TimerListeners = {
-        START: [], STOP: [], TICK: [], FINISH: []
-    }
+    public started!: number
+    public remaining!: number    
+    private _updated: number
+    
+    public running = false
 
     constructor(duration: number, interval: number) {
         this.duration = duration
-        this._remaining = duration
+        this._updated = duration
         this.remaining = duration
         this.interval = interval
     }
@@ -28,29 +25,26 @@ export default class Timer {
         this.running = true
         this.started = Date.now()
         this.timer = setInterval(() => this.tick(), this.interval)
-        this.listeners.START.forEach(_ => _())
     }
 
     public stop() {
         if (!this.running) return
 
         this.running = false
-        this._remaining = this.tick()
+        this._updated = this.tick()
         clearInterval(this.timer)
-        this.listeners.STOP.forEach(_ => _())
     }
 
     public reset() {
         this.stop()
-        this._remaining = this.duration
+        this._updated = this.duration
         this.start()
     }
 
     private tick() {
         if (!this.running) return this.remaining
 
-        this.remaining = Math.max(0, this._remaining - (Date.now() - this.started))
-        this.listeners.TICK.forEach(_ => _())
+        this.remaining = Math.max(0, this._updated - (Date.now() - this.started))
 
         if (this.remaining == 0) {
             this.finish()
@@ -59,8 +53,8 @@ export default class Timer {
         return this.remaining
     }
 
-    public on(event: TimerEvent, listener: () => void) {
-        this.listeners[event].push(listener)
+    public onFinish(listener: () => void) {
+        this.listeners.push(listener)
     }
 
     public get elapsed() {
@@ -70,17 +64,6 @@ export default class Timer {
     public finish() {
         this.running = false
         clearInterval(this.timer)
-        this.listeners.FINISH.forEach(_ => _())
+        this.listeners.forEach(listner => listner())
     }
-}
-
-export type TimerListeners = {
-    [key in TimerEvent]: Array<() => void>
-}
-
-export enum TimerEvent {
-    START="START",
-    STOP="STOP",
-    TICK="TICK",
-    FINISH="FINISH"
 }
