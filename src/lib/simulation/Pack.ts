@@ -71,6 +71,7 @@ export default class Pack {
 
     private modify(score: number) {
         this._rawScore = Math.max(this._rawScore + score, 0)
+        this.data.score = this.score
     }
 
     public get score() {
@@ -152,6 +153,7 @@ export default class Pack {
 
     public set scoreMultiplier(multiplier: number) {
         this._scoreMultiplier = multiplier
+        this.data.score = this.score
         this.save()
     }
 
@@ -161,6 +163,7 @@ export default class Pack {
 
     public set scoreAdjustment(adjustment: number) {
         this._scoreAdjustment = adjustment
+        this.data.score = this.score
         this.save()
     }
 

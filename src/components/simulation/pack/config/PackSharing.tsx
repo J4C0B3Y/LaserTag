@@ -4,7 +4,7 @@ import Container from "@/components/Container"
 import FileInput from "@/components/input/FileInput"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
-import NavigationButton from "@/components/simulation/navigation/NavigationButton"
+import NavigationButton from "@/components/navigation/NavigationButton"
 import Json from "@/lib/utils/Json"
 import { useState } from "react"
 

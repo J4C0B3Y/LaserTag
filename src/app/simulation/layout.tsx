@@ -1,8 +1,8 @@
 "use client"
 
 import { useMatch } from "@/components/provider/impl/MatchProvider"
-import NavigationButton from "@/components/simulation/navigation/NavigationButton"
-import Navigation from "@/components/simulation/navigation/Navigation"
+import NavigationButton from "@/components/navigation/NavigationButton"
+import Navigation from "@/components/navigation/Navigation"
 import { autoupdate, useUpdate } from "@/lib/utils/update"
 import { cn } from "@/lib/utils/cn"
 import { useRouter } from "next-nprogress-bar"

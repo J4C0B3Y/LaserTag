@@ -5,7 +5,7 @@ import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
-import NavigationButton from "@/components/simulation/navigation/NavigationButton"
+import NavigationButton from "@/components/navigation/NavigationButton"
 import { useRouter } from "next-nprogress-bar"
 import { useState } from "react"
 

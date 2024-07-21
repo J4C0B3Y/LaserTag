@@ -3,7 +3,7 @@
 import Container from "@/components/Container"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import ScoreCalculation from "@/components/simulation/help/ScoreCalculation"
-import NavigationButton from "@/components/simulation/navigation/NavigationButton"
+import NavigationButton from "@/components/navigation/NavigationButton"
 
 const Help = () => {
     const { match } = useMatch()
