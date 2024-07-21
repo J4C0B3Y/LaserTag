@@ -3,10 +3,12 @@ import Match from "@/lib/simulation/Match"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"
-import { time } from "console"
 
 export default class Pack {
     public static readonly COOLDOWN = 1000 * 3
+
+    public static readonly DEFAULT_MULTIPLIER = 1
+    public static readonly DEFAULT_ADJUSTMENT = 0
 
     public readonly id
     public readonly team
@@ -20,8 +22,8 @@ export default class Pack {
     private _bases = 0
 
     private _rawScore = 0
-    private _scoreMultiplier = 1
-    private _scoreAdjustment = 0
+    private _scoreMultiplier = Pack.DEFAULT_MULTIPLIER
+    private _scoreAdjustment = Pack.DEFAULT_ADJUSTMENT
 
     private _lastShot = -Pack.COOLDOWN
 
@@ -72,7 +74,9 @@ export default class Pack {
     }
 
     public get score() {
-        return Math.max(this._rawScore * this._scoreMultiplier + this._scoreAdjustment, 0)
+        return Math.max(Math.round(
+            this._rawScore * this._scoreMultiplier + this._scoreAdjustment
+        ), 0)
     }
 
     public get kills() {
@@ -138,6 +142,7 @@ export default class Pack {
 
     public set name(name: string) {
         this._name = name
+        this.data.name = name
         this.save()
     }
 
@@ -171,5 +176,25 @@ export default class Pack {
         const ratio = this._kills / this._deaths
 
         return Math.round((ratio + Number.EPSILON) * 100) / 100
+    }
+
+    public resetStats() {
+        this._kills = 0
+        this._deaths = 0
+        this._bases = 0
+        this._rawScore = 0
+    }
+
+    public resetConfig() {
+        window.localStorage.removeItem(`pack-${this.id}`)
+        
+        this._name = null as any
+        this._scoreMultiplier = Pack.DEFAULT_MULTIPLIER
+        this._scoreAdjustment = Pack.DEFAULT_ADJUSTMENT
+
+        this.load()
+
+        this.data.name = this.name
+        this.name = this._name
     }
 }

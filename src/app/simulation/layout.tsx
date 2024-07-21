@@ -74,7 +74,7 @@ const SimulationLayout = (props: { children: ReactNode }) => {
                     <h1 className="text-primary font-semibold text-xl font-mono">
                         {DateTime.fromMillis(match.timer.elapsed).toFormat("mm:ss.u")}
                         <span className="text-secondary">
-                            {!match.finished && !match.timer.running ? " (Paused)" : ""}
+                            {!match.timer.running ? match.finished ? " (Finished)" : " (Paused)" : ""}
                         </span>
                     </h1>
                 }

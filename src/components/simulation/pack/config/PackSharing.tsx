@@ -6,9 +6,13 @@ import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import NavigationButton from "@/components/simulation/navigation/NavigationButton"
 import Json from "@/lib/utils/Json"
+import { useState } from "react"
 
-const PackSharing = (props: { update: () => void }) => {
+const PackSharing = (props: { onApply: () => void }) => {
+    const DOWNLOAD_COOLDOWN = 1000 * 3
+
     const { match } = useMatch()
+    const [lastDownload, setLastDownload] = useState(0)
 
     const handleUpload = async (file: File) => {
         const content = await file.text()
@@ -30,11 +34,18 @@ const PackSharing = (props: { update: () => void }) => {
             pack.scoreAdjustment = saved.adjustment
         }
 
-        props.update()
+        props.onApply()
         notify.success("Applied Packs File!")
     }
 
     const handleExport = () => {
+        const cooldown = lastDownload + DOWNLOAD_COOLDOWN - Date.now()
+
+        if (cooldown > 0) {
+            notify.error(`Please wait ${Math.ceil(cooldown / 1000)}s before downloading again!`)
+            return
+        }
+
         const packs = []
 
         for (const pack of match.packs) {
@@ -46,6 +57,8 @@ const PackSharing = (props: { update: () => void }) => {
         }
 
         Json.download(packs, "packs")
+        notify.success("Downloaded Packs File!")
+        setLastDownload(Date.now())
     }
 
     const handleImport = () => {

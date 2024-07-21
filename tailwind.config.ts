@@ -36,7 +36,9 @@ const config: Config = {
                 green: color.green[300],
                 yellow: color.yellow[200]
             },
-            validation: color.red[200]
+            invalid: color.red[200],
+            danger: color.red[200],
+            selected: theme[100]
         },
         colors: {
             progress: theme[500],

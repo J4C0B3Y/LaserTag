@@ -17,9 +17,9 @@ const PackConfiguration = (props: { params: { id: number } }) => {
         <div className="flex gap-4">
             <div className="w-2/3 flex flex-col gap-2">
                 <PackInfo pack={pack} />
-                <PackSharing update={update} />
+                <PackSharing onApply={update} />
             </div>
-            <PackConfig pack={pack} update={update} />
+            <PackConfig pack={pack} match={match} onChange={update} />
         </div>
         <PackContainer match={match} config />
     </>

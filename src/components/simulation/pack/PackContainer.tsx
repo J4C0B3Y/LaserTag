@@ -14,7 +14,7 @@ const PackContainer = (props: {
     setShooter?: (shooter: Pack | null) => void 
 }) => {
     return (
-        <Container header="PACKS" inner="flex gap-2 overflow-scroll">
+        <Container header="PACKS" inner="flex gap-2 overflow-scroll overflow-y-hidden">
             {props.match.packs.map(pack =>
                 <Fragment key={pack.id}>
                     {props.config ? 

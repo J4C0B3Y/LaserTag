@@ -5,9 +5,9 @@ import { useMatch } from "@/components/provider/impl/MatchProvider"
 const Statistics = () => {
     const { match } = useMatch()
 
-    return (<button onClick={() => match.end()}>
-        e
-    </button>)
+    return (
+        <></>
+    )
 }
 
 export default Statistics

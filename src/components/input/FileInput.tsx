@@ -1,7 +1,7 @@
 import Container from "@/components/Container"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import { cn } from "@/lib/utils/cn"
-import { useRef, type Ref } from "react"
+import { useRef } from "react"
 
 const FileInput = (props: { onFile: (files: File) => void, outer?: string, inner?: string, accept: string, }) => {
     const ref = useRef<HTMLInputElement>(null)

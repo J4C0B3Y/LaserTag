@@ -25,7 +25,7 @@ const PackCountInput = (props: { value: number, setValue: (value: number) => voi
             <input
                 className="text-center font-semibold bg-element text-primary"
                 type="number"
-                value={props.value}
+                value={props.value || 0}
                 min={MIN}
                 max={MAX}
                 onChange={event => props.setValue(clamp(event.target.valueAsNumber))}
