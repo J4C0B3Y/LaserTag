@@ -2,31 +2,79 @@
 
 import Container from "@/components/Container"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
-import type Pack from "@/lib/simulation/Pack"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import type PackData from "@/lib/statistics/data/PackData"
 
+const average = (values: Array<number>) => {
+    return values.reduce((previous, current) => previous + current) / values.length
+}
+
+const time = (pack: PackData, type: EventType) => {
+    const events = pack.events.filter(pack => pack.type = type)
+    
+    if (events.length < 2) {
+        return 0
+    }
+
+    let sum = 0
+
+    for (let i = 0; i < events.length-1; i++) {
+        sum += events[i + 1].time - events[i].time
+    }
+
+    return sum / events.length
+}
+
 const AdvancedStatistics = () => {
     const { data } = useMatchData()
-
     const packs = data.packs
 
-    const average = (values: Array<number>) => {
-        return values.reduce((previous, current) => previous + current) / values.length
+    const team = (
+        value: (pack: PackData) => number,
+        comparetor: (x: number, y: number) => boolean,
+        filter: (value: number) => boolean
+    ) => {
+        const teams = new Map<number, Array<PackData>>()
+
+        for (const pack of packs) {
+            if (!teams.has(pack.team)) {
+                teams.set(pack.team, new Array())
+            }
+
+            teams.get(pack.team)!.push(pack)
+        }
+
+        let current = 0
+
+        for (const packs of Array.from(teams.values())) {
+            const teamAverage = average(packs.map(value))
+            console.log(teamAverage)
+
+            if (filter(teamAverage) && comparetor(teamAverage, current)) {
+                current = teamAverage
+            }
+        }
+
+        return current
     }
 
-    const averageTopTeam = () => {
-
-    }
-
-    const calculate = (value: (pack: PackData) => number) => {
+    const calculate = (
+        value: (pack: PackData) => number, 
+        comparetor = (x: number, y: number) => x > y,
+        filter = (value: number) => true
+    ) => {
         return [
-            format(average(packs.map(value)))
+            round(average(packs.map(value))),
+            round(team(value, comparetor, filter))
         ]
     }
 
-    const format = (value: number) => {
+    const round = (value: number) => {
         return (Math.round(value * 100) / 100).toString()
+    }
+
+    const format = (value: string) => {
+        return `${Math.round(Number(value) / 10) / 100}s`
     }
 
     const filter = (pack: PackData, type: EventType) => {
@@ -35,12 +83,23 @@ const AdvancedStatistics = () => {
 
     const [playerScore, teamScore] = calculate(pack => pack.score)
     const [playerKills, teamKills] = calculate(pack => filter(pack, EventType.KILL).length)
-    const [playerDeaths, teamDeaths] = calculate(pack => filter(pack, EventType.DEATH).length)
+    const [playerDeaths, teamDeaths] = calculate(
+        pack => filter(pack, EventType.DEATH).length,
+        (x, y) => x < y
+    )
     const [playerBases, teamBases] = calculate(pack => filter(pack, EventType.BASE).length)
 
     const [playerTPK, teamTPK] = calculate(pack => 
-        0
+        time(pack, EventType.KILL),
+        (x, y) => x > y,
+        value => value != 0
     )
+
+    // const [playerTPD, teamTPD] = calculate(pack => 
+    //     time(pack, EventType.DEATH),
+    //     (x, y) => x < y,
+    //     value => value != 0
+    // )
 
     return (
         <div className="flex gap-4 [&>*]:flex-1">
@@ -49,40 +108,40 @@ const AdvancedStatistics = () => {
                 <StatisticsRow
                     statistic="Score"
                     player={playerScore}
-                    team=""
+                    team={teamScore}
                 />
                 <StatisticsRow
                     statistic="Kills"
                     player={playerKills}
-                    team=""
+                    team={teamKills}
                 />
                 <StatisticsRow
                     statistic="Deaths"
                     player={playerDeaths}
-                    team=""
+                    team={teamDeaths}
                 />
                 <StatisticsRow
                     statistic="Bases"
                     player={playerBases}
-                    team=""
+                    team={teamBases}
                 />
                 <StatisticsRow
                     statistic="TPK"
-                    player=""
-                    team=""
+                    player={format(playerTPK)}
+                    team={format(teamTPK)}
                 />
-                <StatisticsRow
+                {/* <StatisticsRow
                     statistic="TPD"
-                    player=""
-                    team=""
-                />
+                    player={format(playerTPD)}
+                    team={format(teamTPD)}
+                /> */}
             </Container>
             <Container header="&nbsp;" inner="flex flex-col gap-2">
                 <StatisticsHeader />
                 <StatisticsRow
                     statistic="KDR"
-                    player=""
-                    team=""
+                    player={round(Number(playerKills) / Number(playerDeaths))}
+                    team={round(Number(teamKills) / Number(teamDeaths))}
                 />
                 <StatisticsRow
                     statistic="TPKDR"
