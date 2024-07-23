@@ -6,11 +6,13 @@ export default class MatchData {
     public readonly basesEnabled
     public readonly teamSize
     public readonly packs
+    public readonly events
 
     constructor(match: Match | null) {
         this.basesEnabled = match?.basesEnabled
         this.teamSize = match?.teamSize
         this.packs = new Array<PackData>()
+        this.events = new Array<MatchEvent>()
     }
 
     public static from(object: any) {

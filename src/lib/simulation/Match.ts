@@ -1,6 +1,6 @@
 import Base, { BaseColor } from "@/lib/simulation/Base"
 import Pack from "@/lib/simulation/Pack"
-import MatchData from "@/lib/statistics/data/MatchData"
+import MatchData, { type MatchEvent } from "@/lib/statistics/data/MatchData"
 import Timer from "@/lib/Timer"
 
 export default class Match {
@@ -63,6 +63,20 @@ export default class Match {
 
     public get finished() {
         return this._finished
+    }
+
+    public saveEvent(packEvent: MatchEvent) {
+        const score = this.packs
+            .map(pack => pack.score)
+            .reduce((a, b) => a + b)
+
+        const event = {
+            type: packEvent.type,
+            time: packEvent.time,
+            score: score
+        }
+
+        this.data.events.push(event)
     }
 }
 

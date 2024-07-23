@@ -65,8 +65,8 @@ export default class Pack {
         }
 
         target._lastShot = this.match.timer.elapsed
-        target.addDeath()
         this.addKill()
+        target.addDeath()
     }
 
     private modify(score: number) {
@@ -115,6 +115,7 @@ export default class Pack {
         }
 
         this.data.events.push(event)
+        this.match.saveEvent(event)
     }
 
     public get deaths() {
