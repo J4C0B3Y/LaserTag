@@ -1,5 +1,6 @@
 import type Base from "@/lib/simulation/Base"
 import Match from "@/lib/simulation/Match"
+import { ratio } from "@/lib/statistics/advanced/Statistics"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"
@@ -65,8 +66,8 @@ export default class Pack {
         }
 
         target._lastShot = this.match.timer.elapsed
-        this.addKill()
         target.addDeath()
+        this.addKill()
     }
 
     private modify(score: number) {
@@ -169,17 +170,7 @@ export default class Pack {
     }
 
     public get kdr() {
-        if (this._kills == 0) {
-            return 0
-        }
-
-        if (this._deaths == 0) {
-            return this._kills
-        }
-
-        const ratio = this._kills / this._deaths
-
-        return Math.round((ratio + Number.EPSILON) * 100) / 100
+        return ratio(this._kills, this._deaths)
     }
 
     public resetStats() {

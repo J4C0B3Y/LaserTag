@@ -7,7 +7,7 @@ const ConfirmationProvider = () => {
     const pathname = usePathname()
 
     useEffect(() => {
-        window.onbeforeunload = () => pathname.startsWith("/simulation") || null
+        window.onbeforeunload = () => pathname != "/" || null
     }, [pathname])
 
     return null

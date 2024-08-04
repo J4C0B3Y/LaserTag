@@ -5,7 +5,7 @@ import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
-import NavigationButton from "@/components/navigation/NavigationButton"
+import Button from "@/components/Button"
 import { useRouter } from "next-nprogress-bar"
 import { useState } from "react"
 
@@ -35,12 +35,12 @@ const Finished = () => {
         <SimulationInfo match={match} />
         
         <Container header="ACTIONS" inner="flex gap-2 justify-around py-8" outer="mx-16">
-            <NavigationButton
+            <Button
                 text="Download Game File"
                 onClick={handleDownload}
             />
 
-            <NavigationButton
+            <Button
                 text="View Match Statistics"
                 onClick={() => {
                     setData(match.data)

@@ -3,10 +3,13 @@
 import Container from "@/components/Container"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import ScoreCalculation from "@/components/simulation/help/ScoreCalculation"
-import NavigationButton from "@/components/navigation/NavigationButton"
+import Button from "@/components/Button"
+import { useState } from "react"
+import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
 const Help = () => {
     const { match } = useMatch()
+    const [confirm, setConfirm] = useState(false)
 
     return (
         <div className="flex gap-4">
@@ -15,8 +18,8 @@ const Help = () => {
                 <ScoreCalculation />
                 <HelpFooter>SCORE ≥ 0</HelpFooter>
             </Container>
-            <div className="flex-1 flex flex-col gap-4">
-                <Container header="&nbsp;">
+            <div className="flex-1 flex flex-col gap-2">
+                <Container header="&nbsp;" outer="pb-2">
                     <HelpHeader>Packs</HelpHeader>
                     <HelpContent>
                         Each pack (player) has a score, the player or team who
@@ -31,10 +34,15 @@ const Help = () => {
                     </HelpContent>
                 </Container>
                 <Container header="CONTROLS">
-                    <NavigationButton 
+                    <QuitConfirmationModal
+                        open={confirm}
+                        setOpen={setConfirm}
+                        onConfirm={() => match.end()}
+                    />
+                    <Button 
                         text="FORCE END MATCH"
-                        className="w-full bg-danger"
-                        onClick={() => match.end()}
+                        className="w-full bg-quit"
+                        onClick={() => setConfirm(true)}
                     />
                 </Container>
             </div>
@@ -60,7 +68,7 @@ const HelpContent = (props: { children: string }) => {
 
 const HelpFooter = (props: { children: string }) => {
     return (
-        <h1 className="text-center text-primary text-xl font-semibold mt-3">
+        <h1 className="text-center text-primary text-xl font-semibold mt-4">
             {props.children}
         </h1>
     )

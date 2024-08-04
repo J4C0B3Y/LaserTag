@@ -34,7 +34,6 @@ const NumberInput = (props: {
             header={props.header}
             value={props.value}
             onChange={handleChange}
-            style={{ MozAppearance: "textfield" }}
             type="number"
             valid={true}
             step={props.step}

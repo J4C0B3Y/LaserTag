@@ -2,7 +2,7 @@ import Container from "@/components/Container"
 
 const ScoreCalculation = () => {
     return (
-        <Container outer="px-2 pt-4" inner="bg-element flex gap-2 flex-col">
+        <Container outer="px-2 pt-4" inner="bg-element flex gap-1 flex-col">
             <Equation text="KILLS × 100" />
             <Operator text="-" />
             <Equation text="DEATHS × 50" />
@@ -26,7 +26,7 @@ const Equation = (props: { text: string }) => {
 
 const Operator = (props: { text: string }) => {
     return (
-        <h1 className="leading-none text-primary text-center text-sm font-semibold">
+        <h1 className="leading-none text-secondary text-center text-lg font-semibold">
             {props.text}
         </h1>
     )

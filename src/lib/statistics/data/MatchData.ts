@@ -1,4 +1,4 @@
-import Match from "@/lib/simulation/Match"
+import Match, { TeamSize } from "@/lib/simulation/Match"
 import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"
 
@@ -8,9 +8,9 @@ export default class MatchData {
     public readonly packs
     public readonly events
 
-    constructor(match: Match | null) {
+    public constructor(match: Match | null) {
         this.basesEnabled = match?.basesEnabled
-        this.teamSize = match?.teamSize
+        this.teamSize = match?.teamSize || TeamSize.DUO
         this.packs = new Array<PackData>()
         this.events = new Array<MatchEvent>()
     }

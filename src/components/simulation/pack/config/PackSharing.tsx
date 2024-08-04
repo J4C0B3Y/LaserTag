@@ -4,7 +4,7 @@ import Container from "@/components/Container"
 import FileInput from "@/components/input/FileInput"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
-import NavigationButton from "@/components/navigation/NavigationButton"
+import Button from "@/components/Button"
 import Json from "@/lib/utils/Json"
 import { useState } from "react"
 
@@ -75,8 +75,8 @@ const PackSharing = (props: { onApply: () => void }) => {
             />
 
             <div className="flex gap-4 [&>*]:flex-1">
-                <NavigationButton text="IMPORT" onClick={handleImport} />
-                <NavigationButton text="EXPORT" onClick={handleExport} />
+                <Button text="IMPORT" onClick={handleImport} />
+                <Button text="EXPORT" onClick={handleExport} />
             </div>
         </Container>
     )

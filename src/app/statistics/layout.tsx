@@ -1,17 +1,19 @@
 "use client"
 
 import Navigation from "@/components/navigation/Navigation"
-import NavigationButton from "@/components/navigation/NavigationButton"
+import Button from "@/components/Button"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { cn } from "@/lib/utils/cn"
 import { useRouter } from "next-nprogress-bar"
 import { usePathname } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
 const StatisticsLayout = (props: { children: React.ReactNode }) => {
     const { data } = useMatchData()
     const router = useRouter()
     const pathname = usePathname()
+    const [confirm, setConfirm] = useState(false)
 
     useEffect(() => {
         if (data == null) {
@@ -24,17 +26,17 @@ const StatisticsLayout = (props: { children: React.ReactNode }) => {
         <>
             <Navigation
                 left={<>
-                    <NavigationButton
+                    <Button
                         text="GENERAL"
                         onClick={() => router.push("/statistics")}
                         className={cn({ "bg-container": pathname.endsWith("/statistics") })}
                     />
-                    <NavigationButton
+                    <Button
                         text="ADVANCED"
                         onClick={() => router.push("/statistics/advanced")}
                         className={cn({ "bg-container": pathname.endsWith("/advanced") })}
                     />
-                    <NavigationButton
+                    <Button
                         text="PLAYERS"
                         onClick={() => router.push("/statistics/players")}
                         className={cn({ "bg-container": pathname.endsWith("/players") })}
@@ -42,9 +44,14 @@ const StatisticsLayout = (props: { children: React.ReactNode }) => {
                 </>}
 
                 right={<>
-                    <NavigationButton
+                    <QuitConfirmationModal
+                        open={confirm}
+                        setOpen={setConfirm}
+                        onConfirm={() => router.push("/")}
+                    />
+                    <Button
                         text="QUIT"
-                        onClick={() => router.push("/")}
+                        onClick={() => setConfirm(true)}
                         className="bg-quit"
                     />
                 </>}

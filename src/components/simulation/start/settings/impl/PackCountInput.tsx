@@ -29,7 +29,6 @@ const PackCountInput = (props: { value: number, setValue: (value: number) => voi
                 min={MIN}
                 max={MAX}
                 onChange={event => props.setValue(clamp(event.target.valueAsNumber))}
-                style={{ MozAppearance: "textfield" }}
             />
             <PackInputButton text="+" onClick={() => step(1)} className="rounded-r-md" />
         </div>

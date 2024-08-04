@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils/cn"
 
-const NavigationButton = (props: { text: string, onClick?: () => void, className?: string }) => {
+const Button = (props: { text: string, onClick?: () => void, className?: string }) => {
     return (
         <button 
             className={cn("rounded-md py-2 px-6 bg-element border", props.className)}
@@ -11,4 +11,4 @@ const NavigationButton = (props: { text: string, onClick?: () => void, className
     )
 }
 
-export default NavigationButton
+export default Button
