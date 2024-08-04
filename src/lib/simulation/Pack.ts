@@ -1,6 +1,6 @@
 import type Base from "@/lib/simulation/Base"
 import Match from "@/lib/simulation/Match"
-import { ratio } from "@/lib/statistics/advanced/Statistics"
+import { ratio } from "@/lib/statistics/Statistics"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"

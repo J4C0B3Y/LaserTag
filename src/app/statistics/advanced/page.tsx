@@ -2,25 +2,12 @@
 
 import Container from "@/components/Container"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
-import { calculate, filter, format, ratio, time } from "@/lib/statistics/advanced/Statistics"
+import { calculate, Comparator, Filter, filter, format, ratio, time } from "@/lib/statistics/Statistics"
 import { EventType } from "@/lib/statistics/data/MatchData"
-
 
 const AdvancedStatistics = () => {
     const { data } = useMatchData()
     const packs = data.packs
-
-    const [packScore, teamScore] = calculate(packs, pack => pack.score)
-    const [packKills, teamKills] = calculate(packs, pack => filter(pack, EventType.KILL).length)
-    const [packDeaths, teamDeaths] = calculate(packs, pack => filter(pack, EventType.DEATH).length, undefined, (a, b) => a - b)
-    const [packBases, teamBases] = calculate(packs, pack => filter(pack, EventType.BASE).length)
-    const [packKDR, teamKDR] = calculate(packs, pack => ratio(filter(pack, EventType.KILL).length, filter(pack, EventType.DEATH).length))
-    const [packActivity, teamActivity] = calculate(packs, pack => time(pack), value => value != 0, (a, b) => a - b)
-    const [packTPK, teamTPK] = calculate(packs, pack => time(pack, EventType.KILL), value => value != 0, (a, b) => a - b)
-    const [packTPD, teamTPD] = calculate(packs, pack => time(pack, EventType.DEATH), value => value != 0, (a, b) => a - b)
-    const [packTPB, teamTPB] = calculate(packs, pack => time(pack, EventType.BASE), value => value != 0, (a, b) => a - b)
-    const [packTPKDR, teamTPKDR] = calculate(packs, pack => ratio(time(pack, EventType.KILL) / 1000, time(pack, EventType.DEATH) / 1000), value => value != 0, (a, b) => a - b)
-
     
     return (
         <div className="flex gap-4 [&>*]:flex-1">
@@ -28,56 +15,76 @@ const AdvancedStatistics = () => {
                 <StatisticsHeader />
                 <StatisticsRow
                     statistic="Score"
-                    pack={packScore}
-                    team={teamScore}
+                    values={calculate(
+                        packs, pack => pack.score
+                    )}
                 />
                 <StatisticsRow
                     statistic="Kills"
-                    pack={packKills}
-                    team={teamKills}
+                    values={calculate(
+                        packs, pack => filter(pack, EventType.KILL).length
+                    )}
                 />
                 <StatisticsRow
                     statistic="Deaths"
-                    pack={packDeaths}
-                    team={teamDeaths}
+                    values={calculate(
+                        packs, pack => filter(pack, EventType.DEATH).length, 
+                        Filter.ALL, Comparator.DESCENDING
+                    )}
                 />
                 <StatisticsRow
                     statistic="Bases"
-                    pack={packBases}
-                    team={teamBases}
+                    values={calculate(
+                        packs, pack => filter(pack, EventType.BASE).length
+                    )}
                 />
                 <StatisticsRow
                     statistic="KDR"
-                    pack={packKDR}
-                    team={teamKDR}
+                    values={calculate(
+                        packs, pack => ratio(filter(pack, EventType.KILL).length, filter(pack, EventType.DEATH).length)
+                    )}
                 />
             </Container>
             <Container header="&nbsp;" inner="flex flex-col gap-2">
                 <StatisticsHeader />
                 <StatisticsRow
                     statistic="Activity"
-                    pack={format(packActivity)}
-                    team={format(teamActivity)}
+                    values={calculate(
+                        packs, pack => time(pack), value => value != 0, 
+                        Comparator.DESCENDING
+                    )}
+                    format
                 />
                 <StatisticsRow
                     statistic="TPK"
-                    pack={format(packTPK)}
-                    team={format(teamTPK)}
+                    values={calculate(
+                        packs, pack => time(pack, EventType.KILL),
+                        Filter.NON_ZERO, Comparator.DESCENDING
+                    )}
+                    format
                 />
                 <StatisticsRow
                     statistic="TPD"
-                    pack={format(packTPD)}
-                    team={format(teamTPD)}
+                    values={calculate(
+                        packs, pack => time(pack, EventType.DEATH),
+                        Filter.NON_ZERO, Comparator.DESCENDING
+                    )}
+                    format
                 />
                 <StatisticsRow
                     statistic="TPB"
-                    pack={format(packTPB)}
-                    team={format(teamTPB)}
+                    values={calculate(
+                        packs, pack => time(pack, EventType.BASE),
+                        Filter.NON_ZERO, Comparator.DESCENDING
+                    )}
+                    format
                 />
                 <StatisticsRow
                     statistic="TPKDR"
-                    pack={packTPKDR}
-                    team={teamTPKDR}
+                    values={calculate(
+                        packs, pack => ratio(time(pack, EventType.KILL) / 1000, time(pack, EventType.DEATH) / 1000),
+                        Filter.NON_ZERO, Comparator.DESCENDING
+                    )}
                 />
             </Container>
         </div>
@@ -94,12 +101,12 @@ const StatisticsHeader = () => {
     )
 }
 
-const StatisticsRow = (props: { statistic: string, pack: string | number, team: string | number }) => {
+const StatisticsRow = (props: { statistic: string, values: Array<number>, format?: boolean }) => {
     return (
         <div className="flex gap-2">
             <StatisticsEntry value={props.statistic} />
-            <StatisticsEntry value={props.pack} />
-            <StatisticsEntry value={props.team} />
+            <StatisticsEntry value={props.format ? format(props.values[0]) : props.values[0]} />
+            <StatisticsEntry value={props.format ? format(props.values[1]) : props.values[1]} />
         </div>
     )
 }

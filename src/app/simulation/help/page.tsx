@@ -22,7 +22,7 @@ const Help = () => {
                 <Container header="&nbsp;" outer="pb-2">
                     <HelpHeader>Packs</HelpHeader>
                     <HelpContent>
-                        Each pack (player) has a score, the player or team who
+                        Each pack (player) has a score. The player or team who
                         has the highest score at the end of the match wins the game.
                     </HelpContent>
                 </Container>

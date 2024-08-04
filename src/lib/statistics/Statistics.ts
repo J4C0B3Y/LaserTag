@@ -86,11 +86,21 @@ export const team = (
 export const calculate = (
     packs: Array<PackData>,
     value: (pack: PackData) => number,
-    filter = (value: number) => true,
-    comparator = (a: number, b: number) => b - a
+    filter = Filter.ALL,
+    comparator = Comparator.ASCENDING
 ) => {
     return [
         pack(packs, value, filter),
         team(packs, value, filter, comparator)
     ]
+}
+
+export const Filter = {
+    ALL: (value: number) => true,
+    NON_ZERO: (value: number) => value != 0
+}
+
+export const Comparator = {
+    ASCENDING: (a: number, b: number) => b - a,
+    DESCENDING: (a: number, b: number) => a - b
 }
