@@ -2,13 +2,14 @@
 
 import Container from "@/components/Container"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
-import { calculate, Comparator, Filter, filter, format, ratio, time } from "@/lib/statistics/Statistics"
+import { calculate, Comparator } from "@/lib/statistics/calculation/AdvancedCalculations"
+import { Filter, filter, format, ratio, time } from "@/lib/statistics/calculation/GeneralCalculations"
 import { EventType } from "@/lib/statistics/data/MatchData"
 
 const AdvancedStatistics = () => {
     const { data } = useMatchData()
     const packs = data.packs
-    
+
     return (
         <div className="flex gap-4 [&>*]:flex-1">
             <Container header="AVERAGES" inner="flex flex-col gap-2">
@@ -28,7 +29,7 @@ const AdvancedStatistics = () => {
                 <StatisticsRow
                     statistic="Deaths"
                     values={calculate(
-                        packs, pack => filter(pack, EventType.DEATH).length, 
+                        packs, pack => filter(pack, EventType.DEATH).length,
                         Filter.ALL, Comparator.DESCENDING
                     )}
                 />
@@ -50,7 +51,8 @@ const AdvancedStatistics = () => {
                 <StatisticsRow
                     statistic="Activity"
                     values={calculate(
-                        packs, pack => time(pack), value => value != 0, 
+                        packs, pack => time(pack),
+                        Filter.NON_ZERO,
                         Comparator.DESCENDING
                     )}
                     format
@@ -111,7 +113,7 @@ const StatisticsRow = (props: { statistic: string, values: Array<number>, format
     )
 }
 
-const StatisticsEntry = (props: {value: string | number }) => {
+const StatisticsEntry = (props: { value: string | number }) => {
     return (
         <div className="bg-element flex-1 rounded-md border-seperator border">
             <h1 className="text-primary text-center text-2xl py-4">{props.value}</h1>

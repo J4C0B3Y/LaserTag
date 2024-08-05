@@ -1,9 +1,9 @@
 import type Base from "@/lib/simulation/Base"
 import Match from "@/lib/simulation/Match"
-import { ratio } from "@/lib/statistics/Statistics"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import PackData from "@/lib/statistics/data/PackData"
 import Json from "@/lib/utils/Json"
+import { ratio } from "../statistics/calculation/GeneralCalculations"
 
 export default class Pack {
     public static readonly COOLDOWN = 1000 * 3
@@ -48,7 +48,7 @@ export default class Pack {
         }
 
         if (this._name == null) {
-           this._name = `Pack #${this.id + 1}`
+            this._name = `Pack #${this.id + 1}`
         }
     }
 
@@ -182,7 +182,7 @@ export default class Pack {
 
     public resetConfig() {
         window.localStorage.removeItem(`pack-${this.id}`)
-        
+
         this._name = null as any
         this._scoreMultiplier = Pack.DEFAULT_MULTIPLIER
         this._scoreAdjustment = Pack.DEFAULT_ADJUSTMENT

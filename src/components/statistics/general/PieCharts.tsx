@@ -1,5 +1,5 @@
 import Container from "@/components/Container"
-import { filter } from "@/lib/statistics/Statistics"
+import { filter } from "@/lib/statistics/calculation/GeneralCalculations"
 import type MatchData from "@/lib/statistics/data/MatchData"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import type PackData from "@/lib/statistics/data/PackData"

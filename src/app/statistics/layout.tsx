@@ -37,9 +37,9 @@ const StatisticsLayout = (props: { children: React.ReactNode }) => {
                         className={cn({ "bg-container": pathname.endsWith("/advanced") })}
                     />
                     <Button
-                        text="PLAYERS"
-                        onClick={() => router.push("/statistics/players")}
-                        className={cn({ "bg-container": pathname.endsWith("/players") })}
+                        text="PACK"
+                        onClick={() => router.push("/statistics/pack")}
+                        className={cn({ "bg-container": pathname.endsWith("/pack") })}
                     />
                 </>}
 
