@@ -46,7 +46,7 @@ const InteractivePack = (props: { pack: Pack, shooter: Pack | null, setShooter: 
                 />
                 <PackButton 
                     text="CONFIG"
-                    onClick={() => router.push(`/simulation/pack/${props.pack.id}`)}
+                    onClick={() => router.push(`/simulation/pack?id=${props.pack.id}`)}
                 />
             </>}
         >

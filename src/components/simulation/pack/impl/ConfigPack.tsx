@@ -11,7 +11,7 @@ const ConfigPack = (props: { pack: Pack }) => {
             buttons={
                 <PackButton 
                     text="SWITCH"
-                    onClick={() => router.push(`/simulation/pack/${props.pack.id}`)}
+                    onClick={() => router.push(`/simulation/pack?id=${props.pack.id}`)}
                 />
             }
         />
