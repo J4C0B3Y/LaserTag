@@ -71,6 +71,13 @@ export const multi = (pack: PackData, type: EventType) => {
     return highest
 }
 
+export const scores = (packs: Array<PackData>) => {
+    return sort(packs).map((team, index) => ({
+        name: `Team ${index + 1}`,
+        score: team.map(pack => pack.score).reduce((a, b) => a + b)
+    }))
+}
+
 export const Filter = {
     ALL: (value: number) => true,
     NON_ZERO: (value: number) => value != 0

@@ -1,15 +1,16 @@
 import { cn } from "@/lib/utils/cn"
-import type { ReactNode } from "react"
+import type { ReactNode, WheelEventHandler } from "react"
 
 const Container = (props: { 
     children?: ReactNode, 
     header?: string, 
     inner?: string, 
     outer?: string, 
-    inset?: boolean
+    inset?: boolean,
+    onWheel?: WheelEventHandler
 }) => {
     return (
-        <div className={cn("flex flex-col", props.outer)}>
+        <div className={cn("flex flex-col", props.outer)} onWheel={props.onWheel}>
             { props.header ? <Header text={props.header!} inset={props.inset} /> : null }
 
             <div className={cn("bg-container border rounded-lg p-2 h-full", props.inner)}>

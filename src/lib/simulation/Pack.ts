@@ -48,7 +48,7 @@ export default class Pack {
         }
 
         if (this._name == null) {
-            this._name = `Pack #${this.id + 1}`
+            this._name = `Pack ${this.id + 1}`
         }
     }
 

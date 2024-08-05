@@ -7,10 +7,12 @@ export const calculate = (
     filter = Filter.ALL,
     comparator = Comparator.ASCENDING
 ) => {
+    const fallback = { pack: packs[0], value: 0 }
+
     return packs
         .map(pack => ({ pack, value: value(pack) }))
         .filter(pack => filter(pack.value))
-        .sort(comparator)[0]
+        .sort(comparator)[0] || fallback
 }
 
 export const Comparator = {
