@@ -70,5 +70,5 @@ export const calculateTeam = (
 
     // Filter the values, sort them using the comparator then
     // return the top teams average, being the first result.
-    return values.filter(filter).sort(comparator)[0]
+    return values.filter(filter).sort(comparator)[0] || 0
 }
