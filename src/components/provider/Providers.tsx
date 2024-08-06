@@ -3,6 +3,7 @@ import GameDataProvider from "@/components/provider/impl/MatchDataProvider"
 import MatchProvider from "@/components/provider/impl/MatchProvider"
 import NotificationProvider from "@/components/provider/impl/NotificationProvider"
 import ConfirmationProvider from "@/components/provider/impl/ConfirmationProvider"
+import ScreenSizeProvider from "@/components/provider/impl/ScreenSizeProvider"
 
 /**
  * @author J4C0B3Y
@@ -20,7 +21,9 @@ const Providers = (props: {
         <GameDataProvider>
             <MatchProvider>
                 <ProgressBar />
-                {props.children}
+                <ScreenSizeProvider>
+                    {props.children}
+                </ScreenSizeProvider>
                 <ConfirmationProvider />
                 <NotificationProvider />
             </MatchProvider>
