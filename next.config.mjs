@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    output: "export",
-    basePath: "/LaserTag",
-    assetPrefix: "/LaserTag/"
+    output: "export"
 }
   
 export default nextConfig
