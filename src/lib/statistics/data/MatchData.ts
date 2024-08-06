@@ -38,8 +38,8 @@ export default class MatchData {
      * @param match The match to use for data.
      */
     public constructor(match: Match | null) {
-        this.teamSize = match?.teamSize || TeamSize.DUO
-        this.basesEnabled = match?.basesEnabled || true
+        this.teamSize = match?.teamSize ?? TeamSize.DUO
+        this.basesEnabled = match?.basesEnabled ?? true
     }
 
     /**
