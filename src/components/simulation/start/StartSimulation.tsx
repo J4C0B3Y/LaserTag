@@ -3,7 +3,7 @@
 import Container from "@/components/Container"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import BasesEnabledInput from "@/components/simulation/start/settings/impl/BasesEnabledInput"
-import PackCountInput from "@/components/simulation/start/settings/impl/PackCountInput"
+import PackCountInput from "@/components/simulation/start/settings/impl/pack-count/PackCountInput"
 import TeamSizeInput from "@/components/simulation/start/settings/impl/TeamSizeInput"
 import MatchSetting from "@/components/simulation/start/settings/MatchSetting"
 import { cn } from "@/lib/utils/cn"
@@ -12,21 +12,58 @@ import { useRouter } from "next-nprogress-bar"
 import { useEffect, useState } from "react"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 
-const StartSimulation = (props: { className?: string }) => {
+const StartSimulation = (props: { 
+    /**
+     * The container className.
+     */
+    className?: string 
+}) => {
+    /**
+     * Used to set the current match.
+     */
     const { setMatch } = useMatch()
+
+    /**
+     * Used to navigate to a different page.
+     */
     const router = useRouter()
 
-    const [packs, setPacks] = useState(8)
+    /**
+     * How many packs are in the match.
+     */
+    const [packCount, setPackCount] = useState(8)
+
+    /**
+     * The match's team size.
+     */
     const [teamSize, setTeamSize] = useState(TeamSize.DUO)
-    const [bases, setBases] = useState(true)
+
+    /**
+     * If bases are enabled for the match.
+     */
+    const [basesEanbled, setBasesEnabled] = useState(true)
+
+    /**
+     * If the current settings are invalid.
+     */
     const [invalid, setInvalid] = useState(false)
 
+    /**
+     * When packs, or teamSize changes, 
+     * update invalid to reflect its validity.
+     */
     useEffect(() => {
-        setInvalid(packs % teamSize != 0 || packs == teamSize)
-    }, [packs, teamSize])
+        // Make sure there is at least 2 teams and
+        // the pack count fits equally into each team.
+        setInvalid(packCount % teamSize != 0 || packCount == teamSize)
+    }, [packCount, teamSize])
 
+    /**
+     * Creates a new match, sends a notification 
+     * and redirects to the simulation page.
+     */
     const handleStart = () => {
-        setMatch(new Match(packs, teamSize, bases))
+        setMatch(new Match(packCount, teamSize, basesEanbled))
         notify.success("Started Simulation!")
         router.push("/simulation")
     }
@@ -34,13 +71,13 @@ const StartSimulation = (props: { className?: string }) => {
     return (
         <Container inner="p-4 flex flex-col gap-2" outer={props.className}>
             <MatchSetting text="Pack Count" className="mt-2">
-                <PackCountInput value={packs} setValue={setPacks} />
+                <PackCountInput packCount={packCount} setPackCount={setPackCount} />
             </MatchSetting>
             <MatchSetting text="Team Size">
-                <TeamSizeInput value={teamSize} setValue={setTeamSize} />
+                <TeamSizeInput teamSize={teamSize} setTeamSize={setTeamSize} />
             </MatchSetting>
             <MatchSetting text="Bases Enabled" className="mb-4">
-                <BasesEnabledInput value={bases} setValue={setBases} />
+                <BasesEnabledInput basesEnabled={basesEanbled} setBasesEnabled={setBasesEnabled} />
             </MatchSetting>
             <button 
                 className={cn(

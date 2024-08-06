@@ -6,13 +6,33 @@ import { cn } from "@/lib/utils/cn"
 import { DateTime } from "luxon"
 
 const InteractiveBase = (props: {
+    /**
+     * The base to display information on.
+     */
     base: Base,
+
+    /**
+     * The shooter.
+     */
     shooter: Pack | null,
-    setShooter: (pack: Pack | null) => void }
-) => {
+
+    /**
+     * The function to set the shooter.
+     * 
+     * @param shooter The shooter.
+     */
+    setShooter: (shooter: Pack | null) => void 
+}) => {
+    /**
+     * If the pack cannot be shot.
+     */
     const disabled = props.shooter == null || props.base.disabled
 
+    /**
+     * Called when the shoot button is pressed.
+     */
     const handleShoot = () => {
+        // Shoots the base.
         props.shooter!.shootBase(props.base)
         props.setShooter(null)
     }
@@ -48,6 +68,9 @@ const InteractiveBase = (props: {
     )
 }
 
+/**
+ * The possible base background colors.
+ */
 const BaseBackground = {
     [BaseColor.RED]: "bg-base-red",
     [BaseColor.BLUE]: "bg-base-blue",

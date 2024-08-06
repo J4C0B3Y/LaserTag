@@ -1,16 +1,33 @@
 "use client"
 
 import Container from "@/components/Container"
-import InteractivePack from "@/components/simulation/pack/impl/InteractivePack"
+import InteractivePack from "@/components/simulation/pack/impl/interactive/InteractivePack"
 import ConfigPack from "@/components/simulation/pack/impl/ConfigPack"
 import type Match from "@/lib/simulation/Match"
 import type Pack from "@/lib/simulation/Pack"
 import { Fragment } from "react"
 
 const PackContainer = (props: { 
+    /**
+     * The match to display the packs from.
+     */
     match: Match, 
+
+    /**
+     * If the container should display config packs.
+     */
     config?: boolean, 
+
+    /**
+     * The shooter.
+     */
     shooter?: Pack | null, 
+
+    /**
+     * A function to set the shooter.
+     * 
+     * @param shooter The shooter.
+     */
     setShooter?: (shooter: Pack | null) => void 
 }) => {
     return (
@@ -27,6 +44,7 @@ const PackContainer = (props: {
                         />
                     }
 
+                    {/* If there is a switch in the teams, display a seperator bar. */}
                     {(pack.id + 1) % props.match.teamSize == 0 && pack.id != props.match.packs.length - 1 ?
                         <span className="border-[1px] border-seperator rounded-md" />
                     : null}

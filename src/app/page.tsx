@@ -9,20 +9,39 @@ import { parse } from "@/lib/utils/json"
 import { useRouter } from "next-nprogress-bar"
 
 const HomePage = () => {
+    /**
+     * Used to set the match data
+     */
     const { setData } = useMatchData()
+
+    /**
+     * Used to navigate between pages.
+     */
     const router = useRouter()
 
+    /**
+     * Called when a file is uploaded.
+     * 
+     * @param file The uploaded file.
+     */
     const handleUpload = async (file: File) => {
+        // Read the file content.
         const content = await file.text()
+
+        // Parse the file content as json.
         const json = parse(content)
 
+        // Ensure valid json is provided.
         if (json == null) {
             notify.error("Invalid Game File!")
             return
         }
 
+        // Load and set the match data.
         setData(MatchData.from(json))
         notify.success("Loaded Game File!")
+
+        // Navigate to the statistics page.
         router.push("/statistics")
     }
 

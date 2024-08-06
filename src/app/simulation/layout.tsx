@@ -3,7 +3,7 @@
 import { useMatch } from "@/components/provider/impl/MatchProvider"
 import Button from "@/components/Button"
 import Navigation from "@/components/navigation/Navigation"
-import { autoupdate, useUpdate } from "@/lib/utils/update"
+import { useAutoUpdate, useUpdate } from "@/lib/utils/update"
 import { cn } from "@/lib/utils/cn"
 import { useRouter } from "next-nprogress-bar"
 import { usePathname } from "next/navigation"
@@ -13,37 +13,70 @@ import { notify } from "@/components/provider/impl/NotificationProvider"
 import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
 const SimulationLayout = (props: { children: ReactNode }) => {
+    /**
+     * If the quit button is shown.
+     */
     const [quit, setQuit] = useState(true)
+
+    /**
+     * If the quit confirmation modal is shown.
+     */
     const [confirm, setConfirm] = useState(false)
 
+    /**
+     * The current match.
+     */
     const { match, setMatch } = useMatch()
+
+    /**
+     * Used to navigate between pages.
+     */
     const router = useRouter()
+
+    /**
+     * The pathname of the current page.
+     */
     const pathname = usePathname()
+
+    /**
+     * Used to manually re-rended the component.
+     */
     const update = useUpdate()
 
-    autoupdate(10)
+    /**
+     * Auto re-render the page.
+     */
+    useAutoUpdate(10)
 
     useEffect(() => {
+        // If there is no match, redirect to the upload page.
         if (match == null) {
-            router.push("/")
-            return
+            return router.push("/")
         }
 
+        // Redirect to the finished page when the match timer ends.
         match.timer.onFinish(() => {
             router.push("/simulation/finished")
         })
     }, [])
 
+    /**
+     * Show the quit button if we are currently not on a sub page.
+     */
     useEffect(() => {
         setQuit(pathname == "/simulation" || pathname == "/simulation/finished")
     }, [pathname])
 
+    /**
+     * Called when the quit / back button is pressed.
+     */
     const handleQuit = () => {
+        // If the back button is pressed, go back.
         if (!quit) {
-            router.push("/simulation")
-            return
+            return router.push("/simulation")
         }
 
+        // Else open the quit confirmation modal.
         setConfirm(true)
     }
     
@@ -54,6 +87,7 @@ const SimulationLayout = (props: { children: ReactNode }) => {
                     <Button 
                         text={match.timer.running ? "PAUSE" : "PLAY"}
                         onClick={() => {
+                            // Toggle the timer and update the page.
                             match.timer[match.timer.running ? "stop" : "start"]()
                             update()
                         }} 
@@ -68,8 +102,10 @@ const SimulationLayout = (props: { children: ReactNode }) => {
 
                 center={
                     <h1 className="text-primary font-semibold text-xl font-mono">
+                        {/* The formatted elapsed match time. */}
                         {DateTime.fromMillis(match.timer.elapsed).toFormat("mm:ss.u")}
                         <span className="text-secondary">
+                            {/* Show (Finished) or (Paused) depending on the match state. */}
                             {!match.timer.running ? match.finished ? " (Finished)" : " (Paused)" : ""}
                         </span>
                     </h1>
@@ -96,8 +132,11 @@ const SimulationLayout = (props: { children: ReactNode }) => {
                 open={confirm}
                 setOpen={setConfirm}
                 onConfirm={() => {
-                    match.end()
+                    // End and clear the match.
+                    match.forceEnd()
                     setMatch(null as any)
+
+                    // Redirect to the upload page.
                     notify.success("Ended Simulation!")
                     router.push("/")
                 }}

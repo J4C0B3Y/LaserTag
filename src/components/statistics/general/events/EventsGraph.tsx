@@ -1,12 +1,20 @@
 import Container from "@/components/Container"
 import Match from "@/lib/simulation/Match"
+import { filter } from "@/lib/statistics/calculation/general"
 import type MatchData from "@/lib/statistics/data/MatchData"
-import { EventType } from "@/lib/statistics/data/MatchData"
+import { EventType, type MatchEvent } from "@/lib/statistics/data/MatchData"
 import { Line } from "react-chartjs-2"
 
-const EventsGraph = (props: { match: MatchData }) => {
-    const events = props.match.events
+const EventsGraph = (props: {
+    /**
+     * The match data to display.
+     */
+    match: MatchData
+}) => {
 
+    /**
+     * Common graph styling to remove ticks and grid lines.
+     */
     const hidden = {
         ticks: {
             display: false
@@ -17,15 +25,22 @@ const EventsGraph = (props: { match: MatchData }) => {
         }
     }
 
+    /**
+     * Converts an event and event index to a point on the graph.
+     * 
+     * @param event The match event.
+     * @param index The event index.
+     * @returns The point object.
+     */
+    const point = (event: MatchEvent, index: number) => {
+        return { x: event.time.toString(), y: index + 1 }
+    }
+
     return (
         <Container header="EVENTS" outer="w-[1700px]" inner="pb-0">
             <Line 
                 options={{
-                    elements: {
-                        line: {
-                            tension: 0.3
-                        }
-                    },
+                    elements: { line: { tension: 0.5 } }, // Smooth line transitions.
                     scales: {
                         x: {
                             beginAtZero: true,
@@ -43,39 +58,35 @@ const EventsGraph = (props: { match: MatchData }) => {
                         deaths: hidden,
                         bases: hidden
                     },
-                    plugins: {
-                        legend: {
-                            position: "bottom"
-                        }
-                    }
+                    plugins: { legend: { position: "bottom" } } // Move legend to the bottom.
                 }} 
                 
                 data={{
                     datasets: [
                         {
                             label: "Score",
-                            data: events.map(event => ({ x: event.time.toString(), y: event.score })),
+                            data: props.match.events.map(event => ({ x: event.time.toString(), y: event.score })),
                             yAxisID: "score",
                             borderColor: "#60a5fa",
                             backgroundColor: "#93c5fd"
                         },
                         {
                             label: "Kills",
-                            data: events.filter(event => event.type == EventType.KILL).map((event, index) => ({ x: event.time.toString(), y: index + 1 })),
+                            data: filter(props.match, EventType.KILL).map(point),
                             yAxisID: "kills",
                             borderColor: "#4ade80",
                             backgroundColor: "#86efac"
                         },
                         {
                             label: "Deaths",
-                            data: events.filter(event => event.type == EventType.DEATH).map((event, index) => ({ x: event.time.toString(), y: index + 1 })),
+                            data: filter(props.match, EventType.DEATH).map(point),
                             yAxisID: "deaths",
                             borderColor: "#f87171",
                             backgroundColor: "#fca5a5"
                         },
                         {
                             label: `Bases ${!props.match.basesEnabled ? "(Disabled)" : ""}`,
-                            data: events.filter(event => event.type == EventType.BASE).map((event, index) => ({ x: event.time.toString(), y: index + 1 })),
+                            data: filter(props.match, EventType.BASE).map(point),
                             yAxisID: "bases",
                             borderColor: "#e879f9",
                             backgroundColor: "#f0abfc"

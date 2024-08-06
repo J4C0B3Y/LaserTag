@@ -5,14 +5,24 @@ import BaseContainer from "@/components/simulation/base/BaseContainer"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
 import PackContainer from "@/components/simulation/pack/PackContainer"
 import type Pack from "@/lib/simulation/Pack"
-import { autoupdate } from "@/lib/utils/update"
+import { useAutoUpdate } from "@/lib/utils/update"
 import { useState } from "react"
 
 const SimulationPage = () => {
+    /**
+     * Used to get and set the shooter.
+     */
     const [shooter, setShooter] = useState<Pack | null>(null)
+
+    /**
+     * The match.
+     */
     const { match } = useMatch()
 
-    autoupdate(10)
+    /**
+     * Re-render the page every 10ms.
+     */
+    useAutoUpdate(10)
 
     return <>
         <SimulationInfo match={match} />

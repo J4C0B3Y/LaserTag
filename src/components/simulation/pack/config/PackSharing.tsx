@@ -2,53 +2,31 @@
 
 import Container from "@/components/Container"
 import FileInput from "@/components/input/FileInput"
-import { useMatch } from "@/components/provider/impl/MatchProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import Button from "@/components/Button"
-import Json from "@/lib/utils/Json"
-import { useState } from "react"
+import { parse, download } from "@/lib/utils/json"
+import { useCooldown } from "@/lib/utils/cooldown"
+import type Match from "@/lib/simulation/Match"
 
-const PackSharing = (props: { onApply: () => void }) => {
-    const DOWNLOAD_COOLDOWN = 1000 * 3
+const PackSharing = (props: { 
+    /**
+     * Called when a pack file is imported.
+     */
+    onImport: () => void,
 
-    const { match } = useMatch()
-    const [lastDownload, setLastDownload] = useState(0)
-
-    const handleUpload = async (file: File) => {
-        const content = await file.text()
-        const config = Json.safeParse(content)
-
-        if (config == null || !Array.isArray(config)) {
-            notify.error("Invalid Packs File!")
-            return
-        }
-
-        for (let i = 0; i < config.length; i++) {
-            if (match.packs.length <= i) break
-
-            const pack = match.packs[i]
-            const saved = config[i]
-
-            pack.name = saved.name
-            pack.scoreMultiplier = saved.multiplier
-            pack.scoreAdjustment = saved.adjustment
-        }
-
-        props.onApply()
-        notify.success("Applied Packs File!")
-    }
-
-    const handleExport = () => {
-        const cooldown = lastDownload + DOWNLOAD_COOLDOWN - Date.now()
-
-        if (cooldown > 0) {
-            notify.error(`Please wait ${Math.ceil(cooldown / 1000)}s before downloading again!`)
-            return
-        }
-
+    /**
+     * The match to import and export packs from.
+     */
+    match: Match
+}) => {
+    /**
+     * Exports and downloads the match's pack configuration.
+     */
+    const handleExport = useCooldown("downloading", 1000 * 3, () => {
         const packs = []
 
-        for (const pack of match.packs) {
+        // Save only the configuration options of each pack.
+        for (const pack of props.match.packs) {
             packs.push({
                 name: pack.name,
                 multiplier: pack.scoreMultiplier,
@@ -56,11 +34,52 @@ const PackSharing = (props: { onApply: () => void }) => {
             })
         }
 
-        Json.download(packs, "packs")
+        // Download the result.
+        download(packs, "packs")
         notify.success("Downloaded Packs File!")
-        setLastDownload(Date.now())
+    })
+
+    /**
+     * Imports a pack file configuration.
+     * 
+     * @param file The file.
+     */
+    const handleUpload = async (file: File) => {
+        // Read the content of the file.
+        const content = await file.text()
+
+        // Parse the result into json.
+        const config = parse(content)
+
+        // If the result is invalid or not an array, return.
+        if (config == null || !Array.isArray(config)) {
+            notify.error("Invalid Packs File!")
+            return
+        }
+
+        // For each entry in the pack config json, set the 
+        // config of the corresponding pack in the match.
+        for (let i = 0; i < config.length; i++) {
+            // If the index of the json pack is greater then 
+            // the highest index allowed in the match, break.
+            if (props.match.packs.length <= i) break
+
+            const pack = props.match.packs[i]
+            const saved = config[i]
+
+            pack.name = saved.name
+            pack.scoreMultiplier = saved.multiplier
+            pack.scoreAdjustment = saved.adjustment
+        }
+
+        // Invoke the on import callback.
+        props.onImport()
+        notify.success("Applied Packs File!")
     }
 
+    /**
+     * Click the file input, triggering the upload window.
+     */
     const handleImport = () => {
         document.getElementsByName("upload")[0].click()
     }
@@ -80,7 +99,6 @@ const PackSharing = (props: { onApply: () => void }) => {
             </div>
         </Container>
     )
-
 }
 
 export default PackSharing

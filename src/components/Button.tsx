@@ -1,6 +1,30 @@
 import { cn } from "@/lib/utils/cn"
 
-const Button = (props: { text: string, onClick?: () => void, className?: string }) => {
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
+/**
+ * A styled button with rounded and a border.
+ */
+const Button = (props: { 
+    /**
+     * The button's text.
+     */
+    text: string,
+
+    /**
+     * Called when the button is clicked.
+     */
+    onClick?: () => void, 
+
+    /**
+     * The button className.
+     */
+    className?: string
+}) => {
     return (
         <button 
             className={cn("rounded-md py-2 px-6 bg-element border", props.className)}

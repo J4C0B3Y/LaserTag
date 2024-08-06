@@ -6,15 +6,38 @@ import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { cn } from "@/lib/utils/cn"
 import { useRouter } from "next-nprogress-bar"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
-const StatisticsLayout = (props: { children: React.ReactNode }) => {
+const StatisticsLayout = (props: { 
+    /**
+     * The page to display.
+     */
+    children: ReactNode
+}) => {
+    /**
+     * The match data.
+     */
     const { data } = useMatchData()
+
+    /**
+     * Used to navigate between pages.
+     */
     const router = useRouter()
+
+    /**
+     * The current page pathname.
+     */
     const pathname = usePathname()
+
+    /**
+     * If the quit confirmation modal is open.
+     */
     const [confirm, setConfirm] = useState(false)
 
+    /**
+     * If there is no data, redirect to the upload.
+     */
     useEffect(() => {
         if (data == null) {
             router.push("/")
@@ -51,6 +74,7 @@ const StatisticsLayout = (props: { children: React.ReactNode }) => {
                     />
                     <Button
                         text="QUIT"
+                        // Show the quit confirmation modal.
                         onClick={() => setConfirm(true)}
                         className="bg-quit"
                     />

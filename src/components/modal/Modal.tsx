@@ -1,7 +1,28 @@
 import Container from "@/components/Container"
 import { type ReactNode } from "react"
 
-const Modal = (props: { title: string, subtitle: string, children?: ReactNode, open: boolean }) => {
+const Modal = (props: { 
+    /**
+     * The modal title.
+     */
+    title: string, 
+
+    /**
+     * The modal sub-title.
+     */
+    subtitle: string, 
+
+    /**
+     * The content to display in the modal.
+     */
+    children?: ReactNode, 
+
+    /**
+     * If the modal is open.
+     */
+    open: boolean 
+}) => {
+    // Only show the modal if the modal is open.
     return props.open && (
         <div className="fixed w-screen h-screen top-0 left-0 bg-page bg-opacity-50 flex items-center justify-center">
             <Container inner="w-[600px] flex flex-col px-0 items-center gap-2">

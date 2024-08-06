@@ -1,26 +1,55 @@
 import Button from "@/components/Button"
 import Container from "@/components/Container"
-import { filter } from "@/lib/statistics/calculation/GeneralCalculations"
-import { EventType } from "@/lib/statistics/data/MatchData"
-import type PackData from "@/lib/statistics/data/PackData"
+import { Metric } from "@/lib/statistics/calculation/pack"
 import type { WheelEvent } from "react"
 
-const MetricSwitcher = (props: { metric: Metric, setMetric: (metric: Metric) => void }) => {
+const MetricSwitcher = (props: {
+    /**
+     * The current metric.
+     */
+    metric: Metric, 
+
+    /**
+     * The function to switch the metric.
+     * @param metric 
+     * @returns 
+     */
+    setMetric: (metric: Metric) => void
+}) => {
+
+    /**
+     * Toggles between the metrics, wrapping to the 
+     * opposite side if the metric is the start or end.
+     * 
+     * @param value The value to step by.
+     */
     const step = (value: number) => {
+        // A list of the metric names.
         const keys = Object.keys(Metric)
+
+        // The current index plus the value.
         let index = keys.indexOf(props.metric) + value
 
+        // Wrap the value if it reaches a boundary.
         if (index < 0) {
             index = keys.length -1
         } else if (index >= keys.length) {
             index = 0
         }
         
+        // Set the new metric.
         props.setMetric(Metric[keys[index] as keyof typeof Metric])
     }
 
+    /**
+     * Steps the value when the continer is scrolled.
+     * 
+     * @param event The wheel event.
+     */
     const handleWheel = (event: WheelEvent) => {
-        step(event.deltaY > 0 ? 1 : -1)
+        // If the scroll deltaY is less then zero,
+        // step by one else step by negative one.
+        step(event.deltaY < 0 ? 1 : -1)
     }
 
     return (
@@ -37,20 +66,6 @@ const MetricSwitcher = (props: { metric: Metric, setMetric: (metric: Metric) => 
             <Button text=">" onClick={() => step(1)} />
         </Container>
     )
-}
-
-export enum Metric {
-    SCORE = "SCORE",
-    KILLS = "KILLS",
-    DEATHS = "DEATHS",
-    BASES = "BASES"
-}
-
-export const MetricResolver = {
-    [Metric.SCORE]: (pack: PackData) => pack.score,
-    [Metric.KILLS]: (pack: PackData) => filter(pack, EventType.KILL).length,
-    [Metric.DEATHS]: (pack: PackData) => filter(pack, EventType.DEATH).length,
-    [Metric.BASES]: (pack: PackData) => filter(pack, EventType.BASE).length
 }
 
 export default MetricSwitcher

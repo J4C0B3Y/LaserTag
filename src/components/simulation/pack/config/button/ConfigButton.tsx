@@ -1,6 +1,21 @@
 import { cn } from "@/lib/utils/cn"
 
-const ConfigButton = (props: { text: string, onClick: () => void, danger?: boolean }) => {
+const ConfigButton = (props: { 
+    /**
+     * The text to display on the button.
+     */
+    text: string, 
+
+    /**
+     * Called when the button is clicked.
+     */
+    onClick: () => void, 
+
+    /**
+     * If the button should be red.
+     */
+    danger?: boolean
+}) => {
     return (
         <button
             className={cn(

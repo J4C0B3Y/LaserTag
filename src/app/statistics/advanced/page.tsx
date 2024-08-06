@@ -2,12 +2,22 @@
 
 import Container from "@/components/Container"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
-import { calculate, Comparator } from "@/lib/statistics/calculation/AdvancedCalculations"
-import { Filter, filter, format, ratio, time } from "@/lib/statistics/calculation/GeneralCalculations"
+import StatisticsHeader from "@/components/statistics/advanced/StatisticsHeader"
+import StatisticsRow from "@/components/statistics/advanced/StatisticsRow"
+import { calculate } from "@/lib/statistics/calculation/advanced"
+import { amount, Comparator, Filter, between } from "@/lib/statistics/calculation/general"
 import { EventType } from "@/lib/statistics/data/MatchData"
+import { ratio } from "@/lib/utils/math"
 
 const AdvancedStatistics = () => {
+    /**
+     * The match data.
+     */
     const { data } = useMatchData()
+
+    /**
+     * The packs in the match data.
+     */
     const packs = data.packs
 
     return (
@@ -17,32 +27,37 @@ const AdvancedStatistics = () => {
                 <StatisticsRow
                     statistic="Score"
                     values={calculate(
+                        // The average score.
                         packs, pack => pack.score
                     )}
                 />
                 <StatisticsRow
                     statistic="Kills"
                     values={calculate(
-                        packs, pack => filter(pack, EventType.KILL).length
+                        // The average amount of kills.
+                        packs, pack => amount(pack, EventType.KILL)
                     )}
                 />
                 <StatisticsRow
                     statistic="Deaths"
                     values={calculate(
-                        packs, pack => filter(pack, EventType.DEATH).length,
-                        Filter.ALL, Comparator.DESCENDING
+                        // The average amount of deaths.
+                        packs, pack => amount(pack, EventType.DEATH),
+                        Comparator.DESCENDING
                     )}
                 />
                 <StatisticsRow
                     statistic="Bases"
                     values={calculate(
-                        packs, pack => filter(pack, EventType.BASE).length
+                        // The average amount of bases shot.
+                        packs, pack => amount(pack, EventType.BASE)
                     )}
                 />
                 <StatisticsRow
                     statistic="KDR"
                     values={calculate(
-                        packs, pack => ratio(filter(pack, EventType.KILL).length, filter(pack, EventType.DEATH).length)
+                        // The ratio of kills to deaths.
+                        packs, pack => ratio(amount(pack, EventType.KILL), amount(pack, EventType.DEATH))
                     )}
                 />
             </Container>
@@ -51,41 +66,45 @@ const AdvancedStatistics = () => {
                 <StatisticsRow
                     statistic="Activity"
                     values={calculate(
-                        packs, pack => time(pack),
-                        Filter.NON_ZERO,
-                        Comparator.DESCENDING
+                        // The average time per event.
+                        packs, pack => between(pack),
+                        Comparator.DESCENDING, Filter.NON_ZERO
                     )}
                     format
                 />
                 <StatisticsRow
                     statistic="TPK"
                     values={calculate(
-                        packs, pack => time(pack, EventType.KILL),
-                        Filter.NON_ZERO, Comparator.DESCENDING
+                        // The average time per kill.
+                        packs, pack => between(pack, EventType.KILL),
+                        Comparator.DESCENDING, Filter.NON_ZERO
                     )}
                     format
                 />
                 <StatisticsRow
                     statistic="TPD"
                     values={calculate(
-                        packs, pack => time(pack, EventType.DEATH),
-                        Filter.NON_ZERO, Comparator.DESCENDING
+                        // The average time per death.
+                        packs, pack => between(pack, EventType.DEATH),
+                        Comparator.DESCENDING, Filter.NON_ZERO
                     )}
                     format
                 />
                 <StatisticsRow
                     statistic="TPB"
                     values={calculate(
-                        packs, pack => time(pack, EventType.BASE),
-                        Filter.NON_ZERO, Comparator.DESCENDING
+                        // The average time per base shot.
+                        packs, pack => between(pack, EventType.BASE),
+                        Comparator.DESCENDING, Filter.NON_ZERO
                     )}
                     format
                 />
                 <StatisticsRow
                     statistic="TPKDR"
                     values={calculate(
-                        packs, pack => ratio(time(pack, EventType.KILL) / 1000, time(pack, EventType.DEATH) / 1000),
-                        Filter.NON_ZERO, Comparator.DESCENDING
+                        // The ratio of the time per kill to the time per death.
+                        packs, pack => ratio(between(pack, EventType.KILL) / 1000, between(pack, EventType.DEATH) / 1000),
+                        Comparator.DESCENDING, Filter.NON_ZERO
                     )}
                 />
             </Container>
@@ -93,32 +112,5 @@ const AdvancedStatistics = () => {
     )
 }
 
-const StatisticsHeader = () => {
-    return (
-        <div className="flex text-secondary text-sm font-semibold [&>*]:flex-1 text-center">
-            <h1>STATISTIC</h1>
-            <h1>PLAYER</h1>
-            <h1>TOP TEAM</h1>
-        </div>
-    )
-}
-
-const StatisticsRow = (props: { statistic: string, values: Array<number>, format?: boolean }) => {
-    return (
-        <div className="flex gap-2">
-            <StatisticsEntry value={props.statistic} />
-            <StatisticsEntry value={props.format ? format(props.values[0]) : props.values[0]} />
-            <StatisticsEntry value={props.format ? format(props.values[1]) : props.values[1]} />
-        </div>
-    )
-}
-
-const StatisticsEntry = (props: { value: string | number }) => {
-    return (
-        <div className="bg-element flex-1 rounded-md border-seperator border">
-            <h1 className="text-primary text-center text-2xl py-4">{props.value}</h1>
-        </div>
-    )
-}
 
 export default AdvancedStatistics

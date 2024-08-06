@@ -4,7 +4,12 @@ import MatchProvider from "@/components/provider/impl/MatchProvider"
 import NotificationProvider from "@/components/provider/impl/NotificationProvider"
 import ConfirmationProvider from "@/components/provider/impl/ConfirmationProvider"
 
-const Providers = (props: { children: React.ReactNode }) => {
+const Providers = (props: { 
+    /**
+     * The layout content displayed on the page.
+     */
+    children: React.ReactNode
+}) => {
     return (
         <GameDataProvider>
             <MatchProvider>

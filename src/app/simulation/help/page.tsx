@@ -2,13 +2,23 @@
 
 import Container from "@/components/Container"
 import { useMatch } from "@/components/provider/impl/MatchProvider"
-import ScoreCalculation from "@/components/simulation/help/ScoreCalculation"
+import ScoreCalculation from "@/components/simulation/help/score/ScoreCalculation"
 import Button from "@/components/Button"
 import { useState } from "react"
 import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
+import HelpHeader from "@/components/simulation/help/HelpHeader"
+import HelpFooter from "@/components/simulation/help/HelpFooter"
+import HelpContent from "@/components/simulation/help/HelpContent"
 
 const Help = () => {
+    /**
+     * The current match.
+     */
     const { match } = useMatch()
+
+    /**
+     * If the quit confirmation modal is open.
+     */
     const [confirm, setConfirm] = useState(false)
 
     return (
@@ -37,7 +47,7 @@ const Help = () => {
                     <QuitConfirmationModal
                         open={confirm}
                         setOpen={setConfirm}
-                        onConfirm={() => match.end()}
+                        onConfirm={() => match.forceEnd()}
                     />
                     <Button 
                         text="FORCE END MATCH"
@@ -50,28 +60,7 @@ const Help = () => {
     )
 }
 
-const HelpHeader = (props: { children: string }) => {
-    return (
-        <h1 className="text-center text-primary text-2xl font-semibold mt-1">
-            {props.children}
-        </h1>
-    )
-}
 
-const HelpContent = (props: { children: string }) => {
-    return (
-        <h1 className="text-justify text-primary text-xl p-2 my-4">
-            {props.children}
-        </h1>
-    )
-}
 
-const HelpFooter = (props: { children: string }) => {
-    return (
-        <h1 className="text-center text-primary text-xl font-semibold mt-4">
-            {props.children}
-        </h1>
-    )
-}
 
 export default Help

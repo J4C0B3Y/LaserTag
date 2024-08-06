@@ -1,7 +1,12 @@
 import Container from "@/components/Container"
 import type { ReactNode } from "react"
 
-const ButtonContainer = (props: { children?: ReactNode }) => {
+const ButtonContainer = (props: { 
+    /**
+     * The buttons to display.
+     */
+    children?: ReactNode
+}) => {
     return (
         <Container
             header="CONTROLS"

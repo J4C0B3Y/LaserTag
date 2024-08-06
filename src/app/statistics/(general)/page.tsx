@@ -2,32 +2,27 @@
 
 import "chart.js/auto"
 import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
-import TotalStatistics from "@/components/statistics/general/TotalStatistics"
-import EventsGraph from "@/components/statistics/general/EventsGraph"
+import TotalStatistics from "@/components/statistics/general/total/TotalStatistics"
+import EventsGraph from "@/components/statistics/general/events/EventsGraph"
 import Container from "@/components/Container"
 import Button from "@/components/Button"
-import { useState } from "react"
 import { notify } from "@/components/provider/impl/NotificationProvider"
-import PieCharts from "@/components/statistics/general/PieCharts"
+import PieCharts from "@/components/statistics/general/pie/PieChartContainer"
+import { useCooldown } from "@/lib/utils/cooldown"
 
 const GeneralStatistics = () => {
-    const DOWNLOAD_COOLDOWN = 1000 * 3
-
+    /**
+     * The match data.
+     */
     const { data } = useMatchData()
-    const [lastDownload, setLastDownload] = useState(0)
 
-    const handleDownload = () => {
-        const cooldown = lastDownload + DOWNLOAD_COOLDOWN - Date.now()
-
-        if (cooldown > 0) {
-            notify.error(`Please wait ${Math.ceil(cooldown / 1000)}s before downloading again!`)
-            return
-        }
-        
+    /**
+     * Called when the download button is clicked.
+     */
+    const download = useCooldown("downloading", 1000 * 3, () => {
         data.download()
         notify.success("Downloaded Game File!")
-        setLastDownload(Date.now())
-    }
+    })
 
     return <>
         <PieCharts match={data} />
@@ -38,7 +33,7 @@ const GeneralStatistics = () => {
                     <Button
                         text="Download Game File"
                         className="w-full"
-                        onClick={handleDownload}
+                        onClick={download}
                     />
                 </Container>
             </div>

@@ -1,8 +1,24 @@
 import Button from "@/components/Button"
 import Modal from "@/components/modal/Modal"
 
-const QuitConfirmationModal = (props: { open: boolean, setOpen: (open: boolean) => void, onConfirm: () => void }) => {
+const QuitConfirmationModal = (props: { 
+    /**
+     * If the modal is open.
+     */
+    open: boolean, 
 
+    /**
+     * The function to set if the modal is open.
+     * 
+     * @param open 
+     */
+    setOpen: (open: boolean) => void, 
+
+    /**
+     * Called if the confirm button is clicked.
+     */
+    onConfirm: () => void 
+}) => {
     return (
         <Modal
             title="Are you sure you would like to quit?"
@@ -11,6 +27,7 @@ const QuitConfirmationModal = (props: { open: boolean, setOpen: (open: boolean) 
         >
             <Button
                 text="CANCEL"
+                // Close the modal if the cancel button is pressed.
                 onClick={() => props.setOpen(false)}
             />
             <Button

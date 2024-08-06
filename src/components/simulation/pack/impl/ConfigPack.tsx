@@ -1,15 +1,24 @@
-import BasePack, { PackButton } from "@/components/simulation/pack/BasePack"
+import BasePack from "@/components/simulation/pack/BasePack"
+import PackButton from "@/components/simulation/pack/PackButton"
 import type Pack from "@/lib/simulation/Pack"
 import { useRouter } from "next-nprogress-bar"
 
-const ConfigPack = (props: { pack: Pack }) => {
+const ConfigPack = (props: { 
+    /**
+     * The pack to configer
+     */
+    pack: Pack
+ }) => {
+    /**
+     * Used to navigate between pages.
+     */
     const router = useRouter()
 
     return (
         <BasePack 
             pack={props.pack}
             buttons={
-                <PackButton 
+                <PackButton
                     text="SWITCH"
                     onClick={() => router.push(`/simulation/pack?id=${props.pack.id}`)}
                 />

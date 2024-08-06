@@ -10,11 +10,26 @@ import { useRouter } from "next-nprogress-bar"
 import { useCooldown } from "@/lib/utils/cooldown"
 
 const Finished = () => {
+    /**
+     * The current match.
+     */
     const { match } = useMatch()
+
+    /**
+     * Used to set the match data.
+     */
     const { setData } = useMatchData()
+
+    /**
+     * Used to navigate between pages.
+     */
     const router = useRouter()
 
+    /**
+     * Called when the download button is pressed.
+     */
     const download = useCooldown("downloading", 1000 * 3, () => {
+        // Downloads the match data.
         match.data.download()
         notify.success("Downloaded Game File!")
     })
@@ -31,6 +46,7 @@ const Finished = () => {
             <Button
                 text="View Match Statistics"
                 onClick={() => {
+                    // Sets the match data and redirects to the statistics page.
                     setData(match.data)
                     notify.success("Loaded Match Data!")
                     router.push("/statistics")
