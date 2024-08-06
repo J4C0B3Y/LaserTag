@@ -10,4 +10,5 @@ const NotificationProvider = () => {
 }
 
 export const notify = toast
+
 export default NotificationProvider
