@@ -2,7 +2,7 @@
 
 const nextConfig = {
     output: "export",
-    basePath: "/lasertag"
+    basePath: "/LaserTag"
 }
   
 export default nextConfig
