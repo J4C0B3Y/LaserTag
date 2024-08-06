@@ -2,7 +2,8 @@
 
 const nextConfig = {
     output: "export",
-    basePath: "/LaserTag"
+    basePath: "/LaserTag",
+    assetPrefix: "/LaserTag/"
 }
   
 export default nextConfig

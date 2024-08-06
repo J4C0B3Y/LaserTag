@@ -18,9 +18,6 @@ export const metadata: Metadata = {
 const RootLayout = (props: { children: React.ReactNode }) => {
     return (
         <html lang="en">
-            <head>
-                <link rel="shortcut icon" href="/LaserTag/favicon.ico" />
-            </head>
             <body className="bg-page h-screen w-full py-16">
                 <Providers>
                     <div className="max-w-[1000px] mx-auto h-full">
