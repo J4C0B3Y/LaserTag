@@ -8,7 +8,7 @@ export default class Base {
 
     private _lastShot = -Base.COOLDOWN
 
-    constructor (color: BaseColor, match: Match) {
+    public constructor(color: BaseColor, match: Match) {
         this.color = color
         this.match = match
     }
@@ -31,8 +31,8 @@ export default class Base {
 }
 
 export enum BaseColor {
-    RED="Red",
-    BLUE="Blue",
-    GREEN="Green",
-    YELLOW="Yellow",
+    RED = "Red",
+    BLUE = "Blue",
+    GREEN = "Green",
+    YELLOW = "Yellow",
 }

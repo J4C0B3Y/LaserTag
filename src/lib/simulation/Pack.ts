@@ -2,8 +2,8 @@ import type Base from "@/lib/simulation/Base"
 import Match from "@/lib/simulation/Match"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import PackData from "@/lib/statistics/data/PackData"
-import Json from "@/lib/utils/Json"
 import { ratio } from "../statistics/calculation/GeneralCalculations"
+import { parse } from "../utils/json"
 
 export default class Pack {
     public static readonly COOLDOWN = 1000 * 3
@@ -28,7 +28,7 @@ export default class Pack {
 
     private _lastShot = -Pack.COOLDOWN
 
-    constructor(id: number, team: number, match: Match) {
+    public constructor(id: number, team: number, match: Match) {
         this.id = id
         this.team = team
         this.match = match
@@ -39,7 +39,7 @@ export default class Pack {
     }
 
     private load() {
-        const saved = Json.safeParse(window.localStorage.getItem(`pack-${this.id}`))
+        const saved = parse(window.localStorage.getItem(`pack-${this.id}`))
 
         if (saved != null) {
             this._name = saved.name
@@ -62,7 +62,7 @@ export default class Pack {
 
     public shoot(target: Pack) {
         if (target.disabled) {
-            throw new Error(`Pack #${target.id} was shot by pack #${this.id} whilst on cooldown for ${target.cooldown}ms.`)
+            throw new Error(`Pack ${target.id} was shot by pack #${this.id} whilst on cooldown for ${target.cooldown}ms.`)
         }
 
         target._lastShot = this.match.timer.elapsed

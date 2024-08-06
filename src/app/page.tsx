@@ -5,7 +5,7 @@ import { useMatchData } from "@/components/provider/impl/MatchDataProvider"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import StartSimulation from "@/components/simulation/start/StartSimulation"
 import MatchData from "@/lib/statistics/data/MatchData"
-import Json from "@/lib/utils/Json"
+import { parse } from "@/lib/utils/json"
 import { useRouter } from "next-nprogress-bar"
 
 const HomePage = () => {
@@ -14,7 +14,7 @@ const HomePage = () => {
 
     const handleUpload = async (file: File) => {
         const content = await file.text()
-        const json = Json.safeParse(content)
+        const json = parse(content)
 
         if (json == null) {
             notify.error("Invalid Game File!")

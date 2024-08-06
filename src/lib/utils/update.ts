@@ -9,6 +9,6 @@ export const autoupdate = (ms: number) => {
 }
 
 export const useUpdate = () => {
-    const [, update] = useReducer(x => x + 1, 0)
-    return update
+    const [, trigger] = useReducer(x => x + 1, 0)
+    return trigger
 }

@@ -8,19 +8,19 @@ export default class Match {
 
     public static readonly KILL_REWARD = 100
     public static readonly DEATH_PENALTY = 50
-    public static readonly BASE_REWARD = 1000 
+    public static readonly BASE_REWARD = 1000
 
     public readonly teamSize
     public readonly basesEnabled
     public readonly data
-    
+
     public readonly packs = new Array<Pack>()
     public readonly bases = new Array<Base>()
-    
+
     public readonly timer = new Timer(Match.DURATION, 10)
     private _finished = false
 
-    constructor(packCount: number, teamSize: TeamSize, basesEnabled: boolean) {
+    public constructor(packCount: number, teamSize: TeamSize, basesEnabled: boolean) {
         this.teamSize = teamSize
         this.basesEnabled = basesEnabled
         this.data = new MatchData(this)
@@ -81,8 +81,8 @@ export default class Match {
 }
 
 export enum TeamSize {
-    SOLO=1,
-    DUO=2,
-    TRIO=3,
-    SQUAD=4
+    SOLO = 1,
+    DUO = 2,
+    TRIO = 3,
+    SQUAD = 4
 }

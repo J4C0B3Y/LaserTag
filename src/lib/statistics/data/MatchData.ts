@@ -1,16 +1,16 @@
 import Match, { TeamSize } from "@/lib/simulation/Match"
 import PackData from "@/lib/statistics/data/PackData"
-import Json from "@/lib/utils/Json"
+import { download } from "@/lib/utils/json"
 
 export default class MatchData {
-    public readonly basesEnabled
     public readonly teamSize
+    public readonly basesEnabled
     public readonly packs
     public readonly events
 
     public constructor(match: Match | null) {
-        this.basesEnabled = match?.basesEnabled
         this.teamSize = match?.teamSize || TeamSize.DUO
+        this.basesEnabled = match?.basesEnabled || true
         this.packs = new Array<PackData>()
         this.events = new Array<MatchEvent>()
     }
@@ -20,14 +20,14 @@ export default class MatchData {
     }
 
     public download() {
-        Json.download(this, "lasertag")
+        download(this, "lasertag")
     }
 }
 
 export enum EventType {
-    KILL="KILL",
-    DEATH="DEATH",
-    BASE="BASE"
+    KILL = "KILL",
+    DEATH = "DEATH",
+    BASE = "BASE"
 }
 
 export type MatchEvent = {

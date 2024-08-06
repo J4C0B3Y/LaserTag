@@ -7,37 +7,25 @@ import { notify } from "@/components/provider/impl/NotificationProvider"
 import SimulationInfo from "@/components/simulation/info/SimulationInfo"
 import Button from "@/components/Button"
 import { useRouter } from "next-nprogress-bar"
-import { useState } from "react"
+import { useCooldown } from "@/lib/utils/cooldown"
 
 const Finished = () => {
-    const DOWNLOAD_COOLDOWN = 1000 * 3
-
     const { match } = useMatch()
     const { setData } = useMatchData()
     const router = useRouter()
 
-    const [lastDownload, setLastDownload] = useState(0)
-
-    const handleDownload = () => {
-        const cooldown = lastDownload + DOWNLOAD_COOLDOWN - Date.now()
-
-        if (cooldown > 0) {
-            notify.error(`Please wait ${Math.ceil(cooldown / 1000)}s before downloading again!`)
-            return
-        }
-        
+    const download = useCooldown("downloading", 1000 * 3, () => {
         match.data.download()
         notify.success("Downloaded Game File!")
-        setLastDownload(Date.now())
-    }
+    })
 
     return <>
         <SimulationInfo match={match} />
-        
+
         <Container header="ACTIONS" inner="flex gap-2 justify-around py-8" outer="mx-16">
             <Button
                 text="Download Game File"
-                onClick={handleDownload}
+                onClick={download}
             />
 
             <Button

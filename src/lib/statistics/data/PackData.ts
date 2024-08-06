@@ -8,7 +8,7 @@ export default class PackData {
 
     public readonly events
 
-    constructor(pack: Pack) {
+    public constructor(pack: Pack) {
         this.name = pack.name
         this.score = pack.score
         this.team = pack.team
