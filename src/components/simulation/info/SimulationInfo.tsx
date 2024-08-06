@@ -4,6 +4,12 @@ import type Match from "@/lib/simulation/Match"
 import { TeamSize } from "@/lib/simulation/Match"
 import { DateTime } from "luxon"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const SimulationInfo = (props: { 
     /**
      * The match to display infomation on.

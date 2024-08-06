@@ -1,6 +1,11 @@
-import type MatchData from "@/lib/statistics/data/MatchData"
 import type PackData from "@/lib/statistics/data/PackData"
 import { Pie } from "react-chartjs-2"
+
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
 
 const PieChart = (props: { 
     /**

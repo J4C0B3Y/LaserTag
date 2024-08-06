@@ -5,6 +5,12 @@ import type MatchData from "@/lib/statistics/data/MatchData"
 import { EventType, type MatchEvent } from "@/lib/statistics/data/MatchData"
 import { Line } from "react-chartjs-2"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const EventsGraph = (props: {
     /**
      * The match data to display.

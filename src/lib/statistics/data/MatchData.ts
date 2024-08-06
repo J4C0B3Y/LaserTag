@@ -9,6 +9,7 @@ import { download } from "@/lib/utils/json"
  * @since 6/08/2024
  * @version LaserTag
  */
+
 export default class MatchData {
     /**
      * A match's team size.

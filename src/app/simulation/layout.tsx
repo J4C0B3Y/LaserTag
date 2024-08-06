@@ -12,6 +12,12 @@ import { DateTime } from "luxon"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const SimulationLayout = (props: { children: ReactNode }) => {
     /**
      * If the quit button is shown.

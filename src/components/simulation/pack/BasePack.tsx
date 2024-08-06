@@ -3,6 +3,12 @@ import type Pack from "@/lib/simulation/Pack"
 import { cn } from "@/lib/utils/cn"
 import type { ReactNode } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const BasePack = (props: { 
     /**
      * The pack to display information for.

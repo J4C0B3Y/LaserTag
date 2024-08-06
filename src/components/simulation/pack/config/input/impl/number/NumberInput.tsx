@@ -2,6 +2,12 @@ import ConfigInput from "@/components/simulation/pack/config/input/ConfigInput"
 import NumberInputButton from "@/components/simulation/pack/config/input/impl/number/NumberInputButton"
 import { type ChangeEvent, type WheelEvent } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const NumberInput = (props: { 
     /**
      * The input header.

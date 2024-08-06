@@ -1,5 +1,11 @@
 import { cn } from "@/lib/utils/cn"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const BasesEnabledInput = (props: {
     /**
      * If bases are enabled.

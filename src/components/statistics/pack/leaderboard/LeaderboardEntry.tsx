@@ -1,5 +1,11 @@
 import Container from "@/components/Container"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const LeaderboardEntry = (props: { 
     /**
      * The position of the entry in the leaderboard.

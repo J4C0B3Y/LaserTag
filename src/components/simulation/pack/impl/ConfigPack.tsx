@@ -3,6 +3,12 @@ import PackButton from "@/components/simulation/pack/PackButton"
 import type Pack from "@/lib/simulation/Pack"
 import { useRouter } from "next-nprogress-bar"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const ConfigPack = (props: { 
     /**
      * The pack to configer

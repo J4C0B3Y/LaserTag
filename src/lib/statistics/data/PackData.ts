@@ -8,6 +8,7 @@ import type { MatchEvent } from "@/lib/statistics/data/MatchData"
  * @since 6/08/2024
  * @version LaserTag
  */
+
 export default class PackData {
     /**
      * A pack's name.

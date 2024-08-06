@@ -1,4 +1,10 @@
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StatisticsHeader = () => {
     return (
         <div className="flex text-secondary text-sm font-semibold [&>*]:flex-1 text-center">

@@ -4,6 +4,12 @@ import type MatchData from "@/lib/statistics/data/MatchData"
 import React, { useContext, useState } from "react"
 
 /**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
+/**
  * The match data context, used in the statistics.
  */
 export const MatchDataContext = React.createContext({

@@ -1,6 +1,15 @@
 import type { Config } from "tailwindcss"
 import color from "tailwindcss/colors"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
+/**
+ * The color theme to use for the site.
+ */
 const theme = color.stone
 
 const config: Config = {

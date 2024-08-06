@@ -1,1 +1,1 @@
-# lasertag
+# LaserTag

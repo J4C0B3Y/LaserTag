@@ -8,6 +8,12 @@ import type Pack from "@/lib/simulation/Pack"
 import { useAutoUpdate } from "@/lib/utils/update"
 import { useState } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const SimulationPage = () => {
     /**
      * Used to get and set the shooter.

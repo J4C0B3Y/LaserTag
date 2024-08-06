@@ -2,6 +2,12 @@ import Container from "@/components/Container"
 import type PackData from "@/lib/statistics/data/PackData"
 import { format } from "@/lib/utils/time"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StandoutEntry = (props: { 
     /**
      * The standout label.

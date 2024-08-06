@@ -5,6 +5,12 @@ import type Pack from "@/lib/simulation/Pack"
 import { cn } from "@/lib/utils/cn"
 import { DateTime } from "luxon"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const InteractiveBase = (props: {
     /**
      * The base to display information on.

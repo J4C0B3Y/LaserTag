@@ -7,6 +7,12 @@ import type MatchData from "@/lib/statistics/data/MatchData"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import { sum } from "@/lib/utils/math"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const TotalStatistics = (props: { 
     /**
      * The match data to display.
@@ -32,7 +38,7 @@ const TotalStatistics = (props: {
                 value={amount(props.match, EventType.BASE)}
             />
             <StatisticEntry 
-                text="Player Count" // The match player count.
+                text="Pack Count" // The match pack count.
                 value={props.match.packs.length}
             />
             <StatisticEntry 

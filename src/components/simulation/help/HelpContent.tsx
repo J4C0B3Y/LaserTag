@@ -1,4 +1,10 @@
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const HelpContent = (props: { 
     /**
      * The content to display in the help box.

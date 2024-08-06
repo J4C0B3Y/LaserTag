@@ -10,6 +10,12 @@ import HelpHeader from "@/components/simulation/help/HelpHeader"
 import HelpFooter from "@/components/simulation/help/HelpFooter"
 import HelpContent from "@/components/simulation/help/HelpContent"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const Help = () => {
     /**
      * The current match.

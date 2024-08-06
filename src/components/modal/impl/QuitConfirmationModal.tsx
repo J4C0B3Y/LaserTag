@@ -1,6 +1,12 @@
 import Button from "@/components/Button"
 import Modal from "@/components/modal/Modal"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const QuitConfirmationModal = (props: { 
     /**
      * If the modal is open.

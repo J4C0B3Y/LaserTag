@@ -3,6 +3,12 @@ import Container from "@/components/Container"
 import { Metric } from "@/lib/statistics/calculation/pack"
 import type { WheelEvent } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const MetricSwitcher = (props: {
     /**
      * The current metric.

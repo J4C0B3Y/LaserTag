@@ -3,6 +3,12 @@
 import ConfigInput from "@/components/simulation/pack/config/input/ConfigInput"
 import { useEffect, useState } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StringInput = (props: { 
     /**
      * The input header.

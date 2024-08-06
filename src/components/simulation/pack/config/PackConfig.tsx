@@ -7,6 +7,12 @@ import StringInput from "@/components/simulation/pack/config/input/impl/StringIn
 import type Match from "@/lib/simulation/Match"
 import type Pack from "@/lib/simulation/Pack"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackConfig = (props: { 
     /**
      * The pack being configured.

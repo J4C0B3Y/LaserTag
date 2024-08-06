@@ -10,6 +10,12 @@ import { notify } from "@/components/provider/impl/NotificationProvider"
 import PieCharts from "@/components/statistics/general/pie/PieChartContainer"
 import { useCooldown } from "@/lib/utils/cooldown"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const GeneralStatistics = () => {
     /**
      * The match data.

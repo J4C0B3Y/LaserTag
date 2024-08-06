@@ -3,6 +3,12 @@
 import { AppProgressBar, NProgressOptions } from "next-nprogress-bar"
 
 /**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
+/**
  * The next-nprogress-bar library forgot to put
  * trickleRate in their option type, so I have to
  * make my own type so typescript doesnt complain.

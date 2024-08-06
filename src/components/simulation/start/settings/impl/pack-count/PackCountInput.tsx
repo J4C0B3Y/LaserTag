@@ -4,6 +4,12 @@ import PackCountInputButton from "@/components/simulation/start/settings/impl/pa
 import { clamp } from "@/lib/utils/math"
 import type { WheelEvent } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackCountInput = (props: { 
     packCount: number, 
     setPackCount: (packCount: number) => void 

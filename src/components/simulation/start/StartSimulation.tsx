@@ -12,6 +12,12 @@ import { useRouter } from "next-nprogress-bar"
 import { useEffect, useState } from "react"
 import { notify } from "@/components/provider/impl/NotificationProvider"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StartSimulation = (props: { 
     /**
      * The container className.

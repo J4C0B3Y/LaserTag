@@ -3,6 +3,12 @@ import { notify } from "@/components/provider/impl/NotificationProvider"
 import { cn } from "@/lib/utils/cn"
 import { useRef } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const FileInput = (props: { 
     /**
      * Called when a valid file is uploaded.

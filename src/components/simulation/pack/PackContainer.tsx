@@ -7,6 +7,12 @@ import type Match from "@/lib/simulation/Match"
 import type Pack from "@/lib/simulation/Pack"
 import { Fragment } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackContainer = (props: { 
     /**
      * The match to display the packs from.

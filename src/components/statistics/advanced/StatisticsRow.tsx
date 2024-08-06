@@ -1,6 +1,12 @@
 import StatisticsEntry from "@/components/statistics/advanced/StatisticsEntry"
 import { format } from "@/lib/utils/time"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StatisticsRow = (props: {
     /**
      * The statistic label.

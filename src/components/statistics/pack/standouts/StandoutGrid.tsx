@@ -5,6 +5,12 @@ import { calculate } from "@/lib/statistics/calculation/pack"
 import { EventType } from "@/lib/statistics/data/MatchData"
 import type PackData from "@/lib/statistics/data/PackData"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StandoutGrid = (props: { 
     /**
      * The packs to perform calculations on.

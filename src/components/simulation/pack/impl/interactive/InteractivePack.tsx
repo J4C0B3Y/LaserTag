@@ -6,6 +6,12 @@ import { cn } from "@/lib/utils/cn"
 import { DateTime } from "luxon"
 import { useRouter } from "next-nprogress-bar"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const InteractivePack = (props: { 
     /**
      * The pack to display.

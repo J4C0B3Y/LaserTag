@@ -4,6 +4,12 @@ import { amount } from "@/lib/statistics/calculation/general"
 import type MatchData from "@/lib/statistics/data/MatchData"
 import { EventType } from "@/lib/statistics/data/MatchData"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PieChartContainer = (props: { 
     /**
      * The match data to display.

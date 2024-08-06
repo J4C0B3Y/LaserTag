@@ -2,6 +2,12 @@ import Container from "@/components/Container"
 import ButtonContainer from "@/components/navigation/ButtonContainer"
 import type { ReactNode } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const Navigation = (props: {
     /**
      * The buttons to put on the left of the navigation.

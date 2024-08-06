@@ -9,6 +9,12 @@ import { amount, Comparator, Filter, between } from "@/lib/statistics/calculatio
 import { EventType } from "@/lib/statistics/data/MatchData"
 import { ratio } from "@/lib/utils/math"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const AdvancedStatistics = () => {
     /**
      * The match data.

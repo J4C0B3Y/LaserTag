@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils/cn"
 import { type ChangeEvent, type CSSProperties, type HTMLInputTypeAttribute, type ReactNode, type WheelEventHandler } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const ConfigInput = (props: {
     /**
      * The input header.

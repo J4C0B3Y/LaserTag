@@ -9,6 +9,12 @@ import Button from "@/components/Button"
 import { useRouter } from "next-nprogress-bar"
 import { useCooldown } from "@/lib/utils/cooldown"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const Finished = () => {
     /**
      * The current match.

@@ -8,6 +8,12 @@ import { parse, download } from "@/lib/utils/json"
 import { useCooldown } from "@/lib/utils/cooldown"
 import type Match from "@/lib/simulation/Match"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackSharing = (props: { 
     /**
      * Called when a pack file is imported.

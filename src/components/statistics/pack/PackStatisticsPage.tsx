@@ -5,9 +5,14 @@ import MetricSwitcher from "@/components/statistics/pack/leaderboard/MetricSwitc
 import StandoutGrid from "@/components/statistics/pack/standouts/StandoutGrid"
 import { Comparator } from "@/lib/statistics/calculation/general"
 import { Metric, packMetrics, teamMetrics } from "@/lib/statistics/calculation/pack"
-
 import type MatchData from "@/lib/statistics/data/MatchData"
 import { useState } from "react"
+
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
 
 const PackStatisticsPage = (props: { 
     /**

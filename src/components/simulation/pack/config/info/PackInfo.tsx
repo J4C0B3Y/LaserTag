@@ -2,6 +2,12 @@ import Container from "@/components/Container"
 import PackInfoStatistic from "@/components/simulation/pack/config/info/PackInfoStatistic"
 import type Pack from "@/lib/simulation/Pack"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackInfo = (props: { 
     /**
      * The pack to display information on.

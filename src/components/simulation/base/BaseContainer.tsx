@@ -3,6 +3,12 @@ import InteractiveBase from "@/components/simulation/base/InteractiveBase"
 import type Match from "@/lib/simulation/Match"
 import type Pack from "@/lib/simulation/Pack"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const BaseContainer = (props: {
     /**
      * The match to display bases from.

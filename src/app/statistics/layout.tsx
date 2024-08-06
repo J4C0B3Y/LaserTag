@@ -9,6 +9,12 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState, type ReactNode } from "react"
 import QuitConfirmationModal from "@/components/modal/impl/QuitConfirmationModal"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const StatisticsLayout = (props: { 
     /**
      * The page to display.

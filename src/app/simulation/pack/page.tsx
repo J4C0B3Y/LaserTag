@@ -11,6 +11,12 @@ import { useRouter } from "next-nprogress-bar"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const PackConfiguration = () => {
     /**
      * The search parameters for the page.

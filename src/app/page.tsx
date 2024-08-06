@@ -8,6 +8,12 @@ import MatchData from "@/lib/statistics/data/MatchData"
 import { parse } from "@/lib/utils/json"
 import { useRouter } from "next-nprogress-bar"
 
+/**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
 const HomePage = () => {
     /**
      * Used to set the match data

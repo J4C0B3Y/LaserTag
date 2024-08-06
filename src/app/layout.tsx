@@ -3,6 +3,12 @@ import "@/app/globals.css"
 import Providers from "@/components/provider/Providers"
 
 /**
+ * @author J4C0B3Y
+ * @since 6/08/2024
+ * @version LaserTag
+ */
+
+/**
  * Page title.
  */
 export const metadata: Metadata = {
