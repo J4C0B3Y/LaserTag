@@ -4,6 +4,7 @@ import MatchProvider from "@/components/provider/impl/MatchProvider"
 import NotificationProvider from "@/components/provider/impl/NotificationProvider"
 import ConfirmationProvider from "@/components/provider/impl/ConfirmationProvider"
 import ScreenSizeProvider from "@/components/provider/impl/ScreenSizeProvider"
+import VersionProvider from "@/components/provider/impl/VersionProvider"
 
 /**
  * @author J4C0B3Y
@@ -26,6 +27,7 @@ const Providers = (props: {
                 </ScreenSizeProvider>
                 <ConfirmationProvider />
                 <NotificationProvider />
+                <VersionProvider />
             </MatchProvider>
         </GameDataProvider>
     )
